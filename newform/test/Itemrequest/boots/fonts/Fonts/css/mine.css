@@ -1,0 +1,47 @@
+@media(max-width: 480px){
+body{
+  background-color:#a8986c;
+  color: black;
+}
+.welcomeinfo{
+	color:#f55e01;
+	font-weight: bold;
+	font-size: 14px;
+}
+.liq{
+	color:white; 
+	font-weight: bold; 
+	font-size: 25px;  
+}
+
+.firstbox{
+	
+
+}
+}
+@media(min-width: 480px){
+body{
+  background-color: black;
+  color: black;
+}
+
+.welcomeinfo{
+	color:#f55e01;
+	font-weight: bold;
+	font-size: 19px;
+}
+
+.liq{
+	color:white; 
+	font-weight: bold; 
+	font-size: 40px;  
+}
+.firstbox{
+	
+
+}
+
+}
+
+
+

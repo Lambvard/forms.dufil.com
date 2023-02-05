@@ -1,0 +1,19 @@
+
+
+@media (min-width:1500px) {
+  .containerms {
+    width: 1400px;
+    margin: auto;
+
+         }
+ .containerm2{
+    background-size: cover;
+    background-color: #f8fcf7;;
+    margin-top: 10px;
+    height: 50px;
+    -webkit-background-size:cover;
+-moz-background-size:cover;
+-o-background-size:cover;
+          }
+}
+

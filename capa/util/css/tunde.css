@@ -1,0 +1,54 @@
+
+@media screen and  (max-width: 600px){
+.body{
+	/*background-color: #210136;*/
+	background-image: url('');
+	background-size:cover;
+	color: ;
+	background-repeat: no-repeat;
+
+
+}
+.form-control-tunde{
+	width: 100%;
+	border:1px solid ;
+	height: 45px;
+	border-radius: 2px 2px 2px 2px;
+}
+
+.form-control-tunde-textarea{
+	width: 100%;
+	border:1px solid ;
+	height: 120px;
+	border-radius: 2px 2px 2px 2px;
+}
+
+.tunde-label{
+	font-weight: bold;
+
+}
+
+
+}
+
+@media screen and  (min-width: 600px){
+.body{
+	background-image: url('');
+	background-size: 100%;
+	color: ;
+	background-repeat: no-repeat;
+}
+.form-control-tunde{
+	width: 100%;
+	border:1px solid ;
+	height: 45px;
+	border-radius: 2px 2px 2px 2px;
+}
+
+.form-control-tunde-textarea{
+	width: 100%;
+	border:1px solid ;
+	height: 120px;
+	border-radius: 2px 2px 2px 2px;
+}
+}

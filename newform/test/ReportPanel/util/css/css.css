@@ -1,0 +1,27 @@
+.contentframe{
+	width: 1400px;
+	margin: auto;
+	overflow: auto;
+
+}
+body,html{
+	height: 100%;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-image: url("../../images/ca1.png");
+	-webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.nav-item{
+	color: white;
+}
+.usercontentframe{
+	width: 890px;
+	margin: auto;
+	overflow: auto;
+
+}

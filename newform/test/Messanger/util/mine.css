@@ -1,0 +1,31 @@
+body{
+	background-image: url('../images/bb.jpg');
+	
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.login_panel{
+	margin: auto;
+	width: 400px;
+	height: 300px;
+	
+}
+.login_label{
+	font-size: 28px;
+	font-family: serif;
+
+
+}
+.message_label{
+	font-size: 38px;
+	font-family: serif;
+	color: red;
+
+}
+.login_label_2{
+	font-size:60px;
+	font-family: serif;
+
+
+}

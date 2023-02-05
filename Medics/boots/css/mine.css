@@ -1,0 +1,17 @@
+.firstpages{
+background-size: cover ; 
+background-position: center; 
+background-image: url("../../image/firstpagepics.png");
+-webkit-background-size:cover;
+-moz-background-size:cover;
+-o-background-size:cover;
+
+}
+.onlinesensory{
+background-size: cover ; 
+background-position: center; 
+background-image: url("../../image/onlinesensory.png");
+-webkit-background-size:cover;
+-moz-background-size:cover;
+-o-background-size:cover;
+	}

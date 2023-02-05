@@ -1,0 +1,1220 @@
+
+/*
+
+
+
+
+$des_1=$_POST['des_1'];
+		$ref_1=$_POST['ref_1'];
+		$num_1=$_POST['num_1'];
+		$use_1=$_POST['use_1'];
+
+		$des_2=$_POST['des_2'];
+		$ref_2=$_POST['ref_2'];
+		$num_2=$_POST['num_2'];
+		$use_2=$_POST['use_2'];
+
+
+
+		$des_3=$_POST['des_3'];
+		$ref_3=$_POST['ref_3'];
+		$num_3=$_POST['num_3'];
+		$use_3=$_POST['use_3'];
+
+
+		$des_4=$_POST['des_4'];
+		$ref_4=$_POST['ref_4'];
+		$num_4=$_POST['num_4'];
+		$use_4=$_POST['use_4'];
+
+		$des_5=$_POST['des_5'];
+		$ref_5=$_POST['ref_5'];
+		$num_5=$_POST['num_5'];
+		$use_5=$_POST['use_5'];
+
+		$des_6=$_POST['des_6'];
+		$ref_6=$_POST['ref_6'];
+		$num_6=$_POST['num_6'];
+		$use_6=$_POST['use_6'];
+
+		$des_7=$_POST['des_7'];
+		$ref_7=$_POST['ref_7'];
+		$num_7=$_POST['num_7'];
+		$use_7=$_POST['use_7'];
+
+		$des_8=$_POST['des_8'];
+		$ref_8=$_POST['ref_8'];
+		$num_8=$_POST['num_8'];
+		$use_8=$_POST['use_8'];
+
+		$des_9=$_POST['des_9'];
+		$ref_9=$_POST['ref_9'];
+		$num_9=$_POST['num_9'];
+		$use_9=$_POST['use_9'];
+
+		$des_10=$_POST['des_10'];
+		$ref_10=$_POST['ref_10'];
+		$num_10=$_POST['num_10'];
+		$use_10=$_POST['use_10'];
+		//$company_name="";
+		//$ref_1=$_POST[''];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if(isset($_POST['loansavedetailsnow'])){
+	$userfullname=$_POST['loanfullname'];
+	$userlocation=$_POST['loadlocation'];
+	$userdepts=$_POST['loaddept'];
+	$userposition=$_POST['loanposition'];
+	$useramount=$_POST['loanamount'];
+	$useramountwords=$_POST['loanamountd'];
+	$userduration=$_POST['loadduration'];
+	$userreason=$_POST['loadreason'];
+	$userstaffid=$_POST['loanstaffid'];
+	$userpicktypeofloan="PersonalLoan";
+	$moneypay=$_POST['moneypay'];
+	$pending="on";
+	$date=Date("Y-m-d");
+	$time=Date("h:m:i");
+	$day=Date("d");
+	$month=Date("M");
+	$year=Date("Y");
+
+	$guarantor1name=$_POST['guan1fullname'];
+	$guarantor1location=$_POST['guan1location'];
+	$guarantor1dept=$_POST['guan1loaddept'];
+	$guarantor1position=$_POST['guan1position'];
+	$guarantor1desin=$_POST['design'];
+	$guan1number=$_POST['pnumber'];
+	$guarantor1staffid=$_POST['guarantor1staffid'];
+	$guan1empdate=$_POST['guan1empdate'];
+
+	$guarantor2name=$_POST['guan2fullname'];
+	$guarantor2location=$_POST['guan2location'];
+	$guarantor2dept=$_POST['guan2loaddept'];
+	$guarantor2position=$_POST['guan2position'];
+	$guarantor2number=$_POST['witnesspnumber'];
+	$guarantor2staffid=$_POST['guarantor2staffid'];
+	$guarantor2address=$_POST['witnessaddress'];
+	$guan2empdate=$_POST['guan2empdate'];
+
+	
+
+
+
+
+
+
+//var_dump($_POST);
+	
+$save_leave_form=sqlsrv_query($db_connection,"SELECT * FROM dbo.staff_transactionallogloan where staffid='$userstaffid' and status='$pending'");
+$save_leave_form_count=sqlsrv_has_rows($save_leave_form);
+
+$checker=[];
+
+	if($save_leave_form_count>0){
+		//header("Location:../index.php?loan=loanpendinglog");
+		$checker['currentloanid']="existuser";
+		
+
+	}else{
+
+			$pick_last_loan=sqlsrv_query($db_connection,"SELECT count(*) as loannumberlast FROM dbo.staff_transactionallogloan where stafflocation='$userlocation' and monthoftrans='$month'");
+			$pick_last_loan_id=sqlsrv_fetch_array($pick_last_loan,SQLSRV_FETCH_ASSOC);
+
+			$loanuserid=$userlocation."/".$date."/LOAN-".($pick_last_loan_id['loannumberlast']+1);
+			//$loanuseridfinal="useridtest";
+	
+
+
+		$save_leave_save=sqlsrv_query($db_connection,"INSERT INTO dbo.staff_transactionallogloan (fullname,staffid,stafflocation,staffdept,loanamount,loanamountwords,loanoption,paymentdur,loanreason,position,monthpay,dateuse,timeuse,status,guarantor1name,guarantor1location,guarantor1dept,guarantor1staffid,guarantor1position,guarantor1design,guarantor1phone,guarantor1emp,guarantor2name,guarantor2location,guarantor2dept,guarantor2staffid,guarantor2position,witnessphone,witnessaddress,guarantor2emp,dayoftrans,monthoftrans,yearoftrans,loanidtrack)values('$userfullname','$userstaffid','$userlocation','$userdepts','$useramount','$useramountwords','$userpicktypeofloan','$userduration','$userreason','$userposition','$moneypay','$date','$time','$pending','$guarantor1name','$guarantor1location','$guarantor1dept','$guarantor1staffid','$guarantor1position','$guarantor1desin','$guan1number','$guan1empdate','$guarantor2name','$guarantor2location','$guarantor2dept','$guarantor2staffid','$guarantor2position','$guarantor2number','$guarantor2address','$guan2empdate','$day','$month','$year','$loanuserid')");
+		
+
+		$checker['currentloanid']=$loanuserid;
+		
+		
+
+	}
+	echo json_encode($checker);
+
+}
+
+elseif (isset($_POST['pullstaff'])) {
+	$loanstaffiduse=$_POST['loanstaffid'];
+	$guarantor1=$_POST['guarantor1staffid'];
+	$guarantor2=$_POST['guarantor2staffid'];
+	$loanpicker=$_POST['loanpick'];
+	$con_user_loan=sqlsrv_query($db_connection,"SELECT * FROM dbo.staffdetailsloan where Staffid='$loanstaffiduse'");
+	
+
+	$res="I have connected";
+
+	echo json_encode($res);
+
+	
+	
+	
+}
+elseif (isset($_POST['logoutloan'])) {
+			//session_start();
+			$staffloanid=$_SESSION['loanuser'];
+			$temstatus_now="on";
+		$user_query_logoutloan=sqlsrv_query($db_connection,"SELECT * FROM dbo.staff_transactionallogloan WHERE staffid='$staffloanid' AND status='$temstatus_now'");
+		$pick_user_details_logoutloan=sqlsrv_has_rows($user_query_logoutloan);
+		if($pick_user_details_logoutloan>0){
+			$update=sqlsrv_query($db_connection,"UPDATE dbo.staff_transactionallogloan SET status='off' WHERE staffid='$staffloanid'");
+
+			session_destroy();
+			unset($_SESSION['loanuser']);
+			unset($_SESSION['sesguan1']);
+			unset($_SESSION['sesguan2']);
+			unset($_SESSION['loanuserloc']);
+			header("Location:../index.php");
+
+		}else{
+			session_destroy();
+			unset($_SESSION['loanuser']);
+			unset($_SESSION['sesguan1']);
+			unset($_SESSION['sesguan2']);
+			unset($_SESSION['loanuserloc']);
+			header("Location:../index.php");
+		}
+
+}elseif (isset($_POST['staffconfirm'])){
+	$staffloan=$_POST['loanstaffid'];
+	$loan_user=sqlsrv_query($db_connection,"SELECT * FROM dbo.staffdetailsloan where Staffid='$staffloan'");
+	$loan_user_2=sqlsrv_fetch_array($loan_user,SQLSRV_FETCH_ASSOC);
+	$loan_user_count=sqlsrv_has_rows($loan_user);
+		$loanstaff_store=[];
+	if($loan_user_count>0){
+			$loanstaff_store['fullname']=$loan_user_2['surname']." ".$loan_user_2['firstname']." ".$loan_user_2['othernames'];
+			$loanstaff_store['dept']=$loan_user_2['Dept'];
+			$loanstaff_store['loc']=$loan_user_2['stafflocation'];
+			echo json_encode($loanstaff_store);
+	}else{
+		echo "Not Connected";
+	}
+
+
+}elseif (isset($_POST['guastaffconfirm'])){
+	$guarantor1staffid=$_POST['guarantor1staffid'];
+	$loan_gua=sqlsrv_query($db_connection,"SELECT * FROM dbo.staffdetailsloan where Staffid='$guarantor1staffid'");
+	$loan_gua_2=sqlsrv_fetch_array($loan_gua,SQLSRV_FETCH_ASSOC);
+	$loan_gua_count=sqlsrv_has_rows($loan_gua);
+		$loangua_store=[];
+	if($loan_gua_count>0){
+			$loangua_store['fullname']=$loan_gua_2['surname']." ".$loan_gua_2['firstname']." ".$loan_gua_2['othernames'];
+			$loangua_store['dept']=$loan_gua_2['Dept'];
+			$loangua_store['loc']=$loan_gua_2['stafflocation'];
+			echo json_encode($loangua_store);
+	}else{
+		echo "Not Connected";
+	}
+
+
+}elseif (isset($_POST['gua2staffconfirm'])){
+	$guarantor2staffid=$_POST['guarantor2staffid'];
+	$loan_gua2=sqlsrv_query($db_connection,"SELECT * FROM dbo.staffdetailsloan where Staffid='$guarantor2staffid'");
+	$loan_gua2_2=sqlsrv_fetch_array($loan_gua2,SQLSRV_FETCH_ASSOC);
+	$loan_gua2_count=sqlsrv_has_rows($loan_gua2);
+		$loangua2_store=[];
+	if($loan_gua2_count>0){
+			$loangua2_store['fullname']=$loan_gua2_2['surname']." ".$loan_gua2_2['firstname']." ".$loan_gua2_2['othernames'];
+			$loangua2_store['dept']=$loan_gua2_2['Dept'];
+			$loangua2_store['loc']=$loan_gua2_2['stafflocation'];
+			echo json_encode($loangua2_store);
+	}else{
+		echo "Not Connected";
+	}
+
+
+}elseif (isset($_POST['carsavedetails'])){
+
+	$carstaffid=$_POST['loanstaffid'];
+	$carfullname=$_POST['loanfullname'];
+	$carlocation=$_POST['loadlocation'];
+	$cardepts=$_POST['loaddept'];
+	$carposition=$_POST['carposition'];
+	$caramount=$_POST['caramount'];
+	$annualsalary=$_POST['annualsalary'];
+	$monthlysalary=$_POST['monthlysalary'];
+	$homeaddress=$_POST['homeaddress'];
+	$datajoined=$_POST['datajoined'];
+	$dateofbirth=$_POST['dateofbirth'];
+	$nextofkin=$_POST['nextofkin'];
+	$nextaddress=$_POST['nextaddress'];
+	$nextofkinrel=$_POST['nextofkinrel'];
+	$doyouhave=$_POST['doyouhave'];
+	$maker=$_POST['maker'];
+	$carreg=$_POST['carreg'];
+	$chassis=$_POST['chassis'];
+	$engineno=$_POST['engineno'];
+	$yearpurchase=$_POST['yearpurchase'];
+	$purpose=$_POST['purpose'];
+	$carpayable=$_POST['carpayable'];
+	$caryear=$_POST['caryear'];
+	//$carmonth=$_POST['carmonth'];
+	$guarantor1staffid=$_POST['guarantor1staffid'];
+	$guarantor1name=$_POST['guarantor1name'];
+	$guarantor1location=$_POST['guarantor1location'];
+	$guarantor1dept=$_POST['guarantor1dept'];
+	$carguaaddress=$_POST['carguaaddress'];
+	$guarantor2staffid=$_POST['guarantor2staffid'];
+	$guan2fullname=$_POST['guan2fullname'];
+	$guan2location=$_POST['guan2location'];
+	$guan2loaddept=$_POST['guan2loaddept'];
+	$carguaposition=$_POST['carguaposition'];
+	$pending="on";
+	$date=Date("Y-m-d");
+	$time=Date("h:m:i");
+	$day=Date("d");
+	$month=Date("M");
+	$year=Date("Y");
+
+										
+
+
+
+
+
+$save_car_form=sqlsrv_query($db_connection,"SELECT * FROM dbo.staff_transactionallogcar where staffid='$carstaffid' and status='$pending'");
+$save_car_form_count=sqlsrv_has_rows($save_car_form);
+
+$checker_car=[];
+
+	if($save_car_form_count>0){
+		//header("Location:../index.php?loan=loanpendinglog");
+		$checker_car['currentloanid']="Exist";
+		
+
+	}else{
+
+			$pick_last_loan=sqlsrv_query($db_connection,"SELECT count(*) as loannumberlast FROM dbo.staff_transactionallogcar where stafflocation='$carlocation' and month='$month'");
+			$pick_last_loan_id=sqlsrv_fetch_array($pick_last_loan,SQLSRV_FETCH_ASSOC);
+
+			$transid=$carlocation."/".$date."/CarLoan-".($pick_last_loan_id['loannumberlast']+1);
+
+		$save_car_save=sqlsrv_query($db_connection,"INSERT INTO dbo.staff_transactionallogcar (fullname,staffid,stafflocation,staffdept,staffposition,loanamount,annualsalary,monthlysalary,homeaddress,datajoined,dateofbirth,nextofkin,nextaddress,nextofkinrel,doyouhave,maker,carreg,chassis,engineno,yearpurchase,puropose,carpayable,caryear,guarantor1staffid,guarantor1name,guarantor1location,guarantor1dept,carguaaddress,guarantor2staffid,guan2fullname,guan2location,guan2loaddept,carguaposition,month,timenow,day,datenow,yearnow,status,transid
+)values('$carfullname','$carstaffid','$carlocation','$cardepts','$carposition','$caramount','$annualsalary','$monthlysalary','$homeaddress','$datajoined','$dateofbirth','$nextofkin','$nextaddress','$nextofkinrel','$doyouhave','$maker','$carreg','$chassis','$engineno','$yearpurchase','$purpose','$carpayable','$caryear','$guarantor1staffid','$guarantor1name','$guarantor1location','$guarantor1dept','$carguaaddress','$guarantor2staffid','$guan2fullname','$guan2location','$guan2loaddept','$carguaposition','$month','$time','$day','$date','$year','$pending','$transid')");
+
+
+		$checker_car['currentloanid']=$transid;
+		
+		
+
+	}
+	echo json_encode($checker_car);
+
+
+
+}elseif (isset($_POST['loguotuser'])){
+	$logout_id=$_POST['loanstaffid'];
+	$ts="on";
+
+	$logout_car=sqlsrv_query($db_connection,"SELECT * FROM dbo.staff_transactionallogcar WHERE staffid='$logout_id' AND status='$ts'");
+		$logout_car_loan=sqlsrv_has_rows($logout_car);
+		$out_car=[];
+		if($logout_car_loan>0){
+			$update=sqlsrv_query($db_connection,"UPDATE dbo.staff_transactionallogcar SET status='off' WHERE staffid='$logout_id'");
+			$out_car['logoutuseridplease']="outlog";
+		}//else{
+			//$out_car['logoutuserid']=="not";
+		//}
+		echo json_encode($out_car);
+
+}elseif (isset($_POST['logutusertemp'])) {
+
+	$logout_loan=$_POST['loanstaffid'];
+	$ts="on";
+
+	$logoutlon=sqlsrv_query($db_connection,"SELECT * FROM dbo.staff_transactionallogloan WHERE staffid='$logout_loan' AND status='$ts'");
+		$logout_loan_loan=sqlsrv_has_rows($logoutlon);
+		$out_loan=[];
+		if($logout_loan_loan>0){
+			$update_loan=sqlsrv_query($db_connection,"UPDATE dbo.staff_transactionallogloan SET status='off' WHERE staffid='$logout_loan'");
+			$out_loan['loanlog']="outlogloan";
+		}//else{
+			//$out_car['logoutuserid']=="not";
+		//}
+		echo json_encode($out_loan);
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+	$carstaffid="E11759";
+	$carfullname="Afolabi Babatunde A";
+	$carlocation="Afolabi Babatunde A";
+	$cardepts="Afolabi Babatunde A";
+	$carposition="Afolabi Babatunde A";
+	$caramount="Afolabi Babatunde A";
+	$annualsalary="Afolabi Babatunde A";
+	$monthlysalary="Afolabi Babatunde A";
+	$homeaddress="Afolabi Babatunde A";
+	$datajoined="Afolabi Babatunde A";
+	$dateofbirth="Afolabi Babatunde A";
+	$nextofkin="Afolabi Babatunde A";
+	$nextaddress="Afolabi Babatunde A";
+	$nextofkinrel="Afolabi Babatunde A";
+	$doyouhave="Afolabi Babatunde A";
+	$maker="Afolabi Babatunde A";
+	$carreg="Afolabi Babatunde A";
+	$chassis="Afolabi Babatunde A";
+	$engineno="Afolabi Babatunde A";
+	$yearpurchase="Afolabi Babatunde A";
+	$purpose="Afolabi Babatunde A";
+	$carpayable="Afolabi Babatunde A";
+	$caryear="Afolabi Babatunde A";
+	$carmonth="Afolabi Babatunde A";
+	$guarantor1staffid="E11759";
+	$guarantor1name="Afolabi Babatunde A";
+	$guarantor1location="Afolabi Babatunde A";
+	$guarantor1dept="Afolabi Babatunde A";
+	$carguaaddress="Afolabi Babatunde A";
+	$guarantor2staffid="E11759";
+	$guan2fullname="Afolabi Babatunde A";
+	$guan2location="Afolabi Babatunde A";
+	$guan2loaddept="Afolabi Babatunde A";
+	$carguaposition="Afolabi Babatunde A";
+	$pending="on";
+	$date=Date("Y-m-d");
+	$time=Date("h:m:i");
+	$day=Date("d");
+	$month=Date("M");
+	$year=Date("Y");
+
+
+$pick_last_loan=sqlsrv_query($db_connection,"SELECT count(*) as loannumberlast FROM dbo.staff_transactionallogcar where stafflocation='$carlocation' and month='$month'");
+			$pick_last_loan_id=sqlsrv_fetch_array($pick_last_loan,SQLSRV_FETCH_ASSOC);
+
+			$transid=$carlocation."/".$date."/CarLoan-".($pick_last_loan_id['loannumberlast']+1);
+
+
+
+
+
+	$save_car_save=sqlsrv_query($db_connection,"INSERT INTO dbo.staff_transactionallogcar (fullname,staffid,stafflocation,staffdept,loanamount,annualsalary,monthlysalary,homeaddress,datajoined,dateofbirth,nextofkin,nextaddress,nextofkinrel,doyouhave,maker,carreg,chassis,engineno,yearpurchase,puropose,carpayable,caryear,carmonth,guarantor1staffid,guarantor1name,guarantor1location,guarantor1dept,carguaaddress,guarantor2staffid,guan2fullname,guan2location,guan2loaddept,carguaposition,month,timenow,day,datenow,status,transid
+)values('$carstaffid','$carfullname','$carlocation','$cardepts','$caramount','$annualsalary','$monthlysalary','$homeaddress','$datajoined','$dateofbirth','$nextofkin','$nextaddress','$nextofkinrel','$doyouhave','$maker','$carreg','$chassis','$engineno','$yearpurchase','$purpose','$carpayable','$caryear','$carmonth','$guarantor1staffid','$guarantor1name','$guarantor1location','$guarantor1dept','$carguaaddress','$guarantor2staffid','$guan2fullname','$guan2location','$guan2loaddept','$carguaposition','$month','$time','$day','$date','$pending','$transid')");
+
+
+	echo "check now";
+
+//fullname,staffid,stafflocation,staffdept,loanamount,annualsalary,monthlysalary,homeaddress,datajoined,dateofbirth,nextofkin,nextaddress,nextofkinrel,doyouhave,maker,carreg,chassis,engineno,yearpurchase,puropose,carpayable,caryear,carmonth,guarantor1staffid,guarantor1name,guarantor1location,guarantor1dept,carguaaddress,guarantor2staffid,guan2fullname,guan2location,guan2loaddept,carguaposition,month,timenow,day,datenow,status,transid
+
+	//'$carposition',
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+$save_car_form=sqlsrv_query($db_connection,"SELECT * FROM dbo.staff_transactionallogcar where staffid='$carstaffid' ");
+$save_car_form_count=sqlsrv_has_rows($save_car_form);
+
+$checker_car=[];
+
+	if($save_car_form_count>0){
+		//header("Location:../index.php?loan=loanpendinglog");
+		$checker_car['userexist']="Exist";
+		echo "user exixt";
+		
+
+	}else{
+
+			$pick_last_loan=sqlsrv_query($db_connection,"SELECT count(*) as loannumberlast FROM dbo.staff_transactionallogcar where stafflocation='$carlocation' and month='$month'");
+			$pick_last_loan_id=sqlsrv_fetch_array($pick_last_loan,SQLSRV_FETCH_ASSOC);
+
+			$transid=$carlocation."/".$date."/CarLoan-".($pick_last_loan_id['loannumberlast']+1);
+
+		$save_car_save=sqlsrv_query($db_connection,"INSERT INTO dbo.staff_transactionallogcar (fullname,staffid,stafflocation,staffdept,loanamount,annualsalary,monthlysalary,homeaddress,datajoined,dateofbirth,nextofkin,nextaddress,nextofkinrel,doyouhave,maker,carreg,chassis,engineno,yearpurchase,puropose,carpayable,caryear,carmonth,guarantor1staffid,guarantor1name,guarantor1location,guarantor1dept,carguaaddress
+      ,guarantor2staffid,guan2fullname,guan2location,guan2loaddept,carguaposition,month,timenow,day,datenow,status,transid
+)values('$carstaffid','$carfullname','$carlocation','$cardepts','$carposition','$caramount','$annualsalary','$monthlysalary','$homeaddress','$datajoined','$dateofbirth','$nextofkin','$nextaddress','$nextofkinrel','$doyouhave','$maker','$carreg','$chassis','$engineno','$yearpurchase','$purpose','$carpayable','$caryear','$carmonth','$guarantor1staffid','$guarantor1name','$guarantor1location','$guarantor1dept','$carguaaddress','$guarantor2staffid','$guan2fullname','$guan2location','$guan2loaddept','$carguaposition','$pending','$date','$time','$day','$month','$year','$transid')");
+		
+
+		$checker_car['currentloanid']=$transid;
+
+
+		
+		
+
+	}
+	echo json_encode($checker_car)."<br>";
+	echo json_encode($save_car_save);
+*/
+	
+//fullname,staffid,stafflocation,staffdept,loanamount,loanamountwords,loanoption,paymentdur,loanreason,position,monthpay,dateuse,timeuse,status,guarantor1name,guarantor1location,guarantor1dept,guarantor1staffid,guarantor1position,guarantor1design,guarantor1phone,guarantor2name,guarantor2location,guarantor2dept,guarantor2staffid,guarantor2position,witnessphone,witnessaddress,dayoftrans,monthoftrans,yearoftrans,loanidtrack
+
+
+
+
+/*
+
+	$userfullname="Test 2";
+	$userlocation="Test 2";
+	$userdepts="Test 2";
+	$userposition="Test 2";
+	$useramount="Test 2";
+	$useramountwords="Test 2";
+	$userduration="Test 2";
+	$userreason="Test 2";
+	$userstaffid="E11759";
+	$userpicktypeofloan="PersonalLoan";
+	$moneypay="Test 2";
+	$pending="on";
+	$date=Date("Y-m-d");
+	$time=Date("h:m:i");
+	$day=Date("d");
+	$month=Date("M");
+	$year=Date("Y");
+
+	$guarantor1name="Test 2";
+	$guarantor1location="Test 2";
+	$guarantor1dept="Test 2";
+	$guarantor1position="Test 2";
+	$guarantor1desin="Test 2";
+	$guan1number="Test 2";
+	$guarantor1staffid="Test 2";
+
+	$guarantor2name="Test 2";
+	$guarantor2location="Test 2";
+	$guarantor2dept="Test 2";
+	$guarantor2position="Test 2";
+	$guarantor2number="Test 2";
+	$guarantor2staffid="Test 2";
+	$guarantor2address="Test 2";
+	$guan1empdate="Test 2";
+	$guan2empdate="Test 2";
+
+
+	$save_leave_form=sqlsrv_query($db_connection,"SELECT * FROM dbo.staff_transactionallogloan where staffid='$userstaffid' and status='$pending'");
+$save_leave_form_count=sqlsrv_has_rows($save_leave_form);
+
+$checker=[];
+
+	if($save_leave_form_count>0){
+		//header("Location:../index.php?loan=loanpendinglog");
+		$checker['userexist']="Exist";
+		
+
+	}else{
+
+			$pick_last_loan=sqlsrv_query($db_connection,"SELECT count(*) as loannumberlast FROM dbo.staff_transactionallogloan where stafflocation='$userlocation' and monthoftrans='$month'");
+			$pick_last_loan_id=sqlsrv_fetch_array($pick_last_loan,SQLSRV_FETCH_ASSOC);
+
+			$loanuserid=$userlocation."/".$date."/LOAN-".($pick_last_loan_id['loannumberlast']+1);
+			//$loanuseridfinal="useridtest";
+	
+
+
+		$save_leave_save=sqlsrv_query($db_connection,"INSERT INTO dbo.staff_transactionallogloan (fullname,staffid,stafflocation,staffdept,loanamount,loanamountwords,loanoption,paymentdur,loanreason,position,monthpay,dateuse,timeuse,status,guarantor1name,guarantor1location,guarantor1dept,guarantor1staffid,guarantor1position,guarantor1design,guarantor1phone,guarantor1emp,guarantor2name,guarantor2location,guarantor2dept,guarantor2staffid,guarantor2position,witnessphone,witnessaddress,guarantor2emp,dayoftrans,monthoftrans,yearoftrans,loanidtrack)values('$userfullname','$userstaffid','$userlocation','$userdepts','$useramount','$useramountwords','$userpicktypeofloan','$userduration','$userreason','$userposition','$moneypay','$date','$time','$pending','$guarantor1name','$guarantor1location','$guarantor1dept','$guarantor1staffid','$guarantor1position','$guarantor1desin','$guan1number','$guan1empdate','$guarantor2name','$guarantor2location','$guarantor2dept','$guarantor2staffid','$guarantor2position','$guarantor2number','$guarantor2address','$guan2empdate','$day','$month','$year','$loanuserid')");
+		
+
+		$checker['currentloanid']=$loanuserid;
+		
+		
+
+	}
+	echo json_encode($checker);
+
+*/
+
+
+
+
+
+				<div class="row" style="margin-bottom:10px; margin-top:10px;" id="secondlog"><div  class="col-5" style="margin:0px;"><input type="text" class="form-control" name="" placeholder="Type Item Description and Specification" id="des_2"></div><div  class="col-2" style=""><input type="text" class="form-control" name="" placeholder="Ref" id="ref_2"></div><div  class="col-3" style=""><input type="number" class="form-control" name="" placeholder="Total Amount" id="num_2"></div><div class="col-2" style=""><select class="form-control" id="use_2"><option></option><option>Transportation(Air)</option><option>Transportation(Land)</option><option>Meeting(Room)</option><option>Meeting(Feeding)</option><option>Electricity</option><option>Medical</option><option>House Repairs</option><option>Others</option></select></div></div>
+
+
+
+
+
+				<div class="row" style="margin-bottom:10px; margin-top:10px; " id="thirdlog"><div  class="col-5" style="margin:0px;"><input type="text" class="form-control" name="" placeholder="Type Item Description and Specification" id="des_3"></div><div  class="col-2" style=""><input type="text" class="form-control" name="" placeholder="Ref" id="ref_3"></div><div  class="col-3" style=""><input type="number" class="form-control" name="" placeholder="Total Amount" id="num_3"></div><div class="col-2" style=""><select class="form-control" id="use_3"><option></option><option>Transportation(Air)</option><option>Transportation(Land)</option><option>Meeting(Room)</option><option>Meeting(Feeding)</option><option>Electricity</option><option>Medical</option><option>House Repairs</option><option>Others</option></select></div></div>
+
+
+
+
+				<div class="row" style="margin-bottom:10px; margin-top:10px; " id="fourlog"><div  class="col-5" style="margin:0px;"><input type="text" class="form-control" name="" placeholder="Type Item Description and Specification" id="des_4"></div><div  class="col-2" style=""><input type="text" class="form-control" name="" placeholder="Ref" id="ref_4"></div><div  class="col-3" style=""><input type="number" class="form-control" name="" placeholder="Total Amount" id="num_4"></div><div class="col-2" style=""><select class="form-control" id="use_4"><option></option><option>Transportation(Air)</option><option>Transportation(Land)</option><option>Meeting(Room)</option><option>Meeting(Feeding)</option><option>Electricity</option><option>Medical</option><option>House Repairs</option><option>Others</option></select></div></div>
+
+
+				<div class="row" style="margin-bottom:10px; margin-top:10px; " id="fivelog"><div  class="col-5" style="margin:0px;"><input type="text" class="form-control" name="" placeholder="Type Item Description and Specification" id="des_5"></div><div  class="col-2" style=""><input type="text" class="form-control" name="" placeholder="Ref" id="ref_5"></div><div  class="col-3" style=""><input type="number" class="form-control" name="" placeholder="Total Amount" id="num_5"></div><div class="col-2" style=""><select class="form-control" id="use_5"><option></option><option>Transportation(Air)</option><option>Transportation(Land)</option><option>Meeting(Room)</option><option>Meeting(Feeding)</option><option>Electricity</option><option>Medical</option><option>House Repairs</option><option>Others</option></select></div></div>
+
+
+
+				<div class="row" style="margin-bottom:10px; margin-top:10px; " id="sixlog"><div  class="col-5" style="margin:0px;"><input type="text" class="form-control" name="" placeholder="Type Item Description and Specification" id="des_6"></div><div  class="col-2" style=""><input type="text" class="form-control" name="" placeholder="Ref" id="ref_6"></div><div  class="col-3" style=""><input type="number" class="form-control" name="" placeholder="Total Amount" id="num_6"></div><div class="col-2" style=""><select class="form-control" id="use_6"><option></option><option>Transportation(Air)</option><option>Transportation(Land)</option><option>Meeting(Room)</option><option>Meeting(Feeding)</option><option>Electricity</option><option>Medical</option><option>House Repairs</option><option>Others</option></select></div></div>
+
+
+
+
+				<div class="row" style="margin-bottom:10px; margin-top:10px; " id="sevenlog"><div  class="col-5" style="margin:0px;"><input type="text" class="form-control" name="" placeholder="Type Item Description and Specification" id="des_7"></div><div  class="col-2" style=""><input type="text" class="form-control" name="" placeholder="Ref" id="ref_7"></div><div  class="col-3" style=""><input type="number" class="form-control" name="" placeholder="Total Amount" id="num_7"></div><div class="col-2" style=""><select class="form-control" id="use_7"><option></option><option>Transportation(Air)</option><option>Transportation(Land)</option><option>Meeting(Room)</option><option>Meeting(Feeding)</option><option>Electricity</option><option>Medical</option><option>House Repairs</option><option>Others</option></select></div></div>
+
+
+				<div class="row" style="margin-bottom:10px; margin-top:10px; " id="eightlog"><div  class="col-5" style="margin:0px;"><input type="text" class="form-control" name="" placeholder="Type Item Description and Specification" id="des_8"></div><div  class="col-2" style=""><input type="text" class="form-control" name="" placeholder="Ref" id="ref_8"></div><div  class="col-3" style=""><input type="number" class="form-control" name="" placeholder="Total Amount" id="num_8"></div><div class="col-2" style=""><select class="form-control" id="use_8"><option></option><option>Transportation(Air)</option><option>Transportation(Land)</option><option>Meeting(Room)</option><option>Meeting(Feeding)</option><option>Electricity</option><option>Medical</option><option>House Repairs</option><option>Others</option></select></div></div>
+
+
+
+				<div class="row" style="margin-bottom:10px; margin-top:10px; " id="ninelog"><div  class="col-5" style="margin:0px;"><input type="text" class="form-control" name="" placeholder="Type Item Description and Specification" id="des_9"></div><div  class="col-2" style=""><input type="text" class="form-control" name="" placeholder="Ref" id="ref_9"></div><div  class="col-3" style=""><input type="number" class="form-control" name="" placeholder="Total Amount" id="num_9"></div><div class="col-2" style=""><select class="form-control" id="use_9"><option></option><option>Transportation(Air)</option><option>Transportation(Land)</option><option>Meeting(Room)</option><option>Meeting(Feeding)</option><option>Electricity</option><option>Medical</option><option>House Repairs</option><option>Others</option></select></div></div>
+
+
+				<div class="row" style="margin-bottom:10px; margin-top:10px; " id="tenlog"><div  class="col-5" style="margin:0px;"><input type="text" class="form-control" name="" placeholder="Type Item Description and Specification" id="des_10"></div><div  class="col-2" style=""><input type="text" class="form-control" name="" placeholder="Ref" id="ref_10"></div><div  class="col-3" style=""><input type="number" class="form-control" name="" placeholder="Total Amount" id="num_10"></div><div class="col-2" style=""><select class="form-control" id="use_10"><option></option><option>Transportation(Air)</option><option>Transportation(Land)</option><option>Meeting(Room)</option><option>Meeting(Feeding)</option><option>Electricity</option><option>Medical</option><option>House Repairs</option><option>Others</option></select></div></div>
+			</section>
+	-->
+				<!--<div class="form-group" id="supervisorpro" style="display: none;" >
+					<i style="color:#f55e01;font-weight: bold;">Note: I will send mail to your Factory Manager</i>
+					<input type="text" class="form-control" name="" placeholder="Your Factory Manager" id="superpro"  >
+				</div>-->
+				<!--<div class="form-group" id="securitypro" style="display: none;" >
+					<i style="color:#f55e01;font-weight: bold;">Note: I will send mail to your security team</i>
+					<input type="text" class="form-control" name="" placeholder="Your location security team" id="security"  >
+
+
+
+
+
+
+
+//keep the pdf
+
+
+
+
+
+<?php
+
+include("fpdf/fpdf.php");
+include("../db/db.php");
+//session_start();
+class babatunde extends FPDF{
+
+	function firstdetails($db_connection){
+
+		if(isset($_POST['buttongroupdownloadname'])){
+			$transaction_id=$_POST['buttongroupdownloadid'];
+			//$transaction_id="E11759";
+			$status_op="on";
+			//$countall=array();
+			$ref_num="";
+			$sql_pull="SELECT * FROM liquidation.dbo.staffliquationexp where transid=? and op_status=? ";
+			$sql_pull_prep=sqlsrv_prepare($db_connection,$sql_pull,array($transaction_id,$status_op));
+			sqlsrv_execute($sql_pull_prep);
+			$count_list=sqlsrv_fetch_array($sql_pull_prep,SQLSRV_FETCH_ASSOC);
+
+			//sum the total amount
+
+			$sql_pull="SELECT SUM(num_1,num_2,num_3,num_4,num_5,num_6,num_7,num_8,num_9,num_10) AS ttamount FROM liquidation.dbo.staffliquationexp where transid=? and op_status=? ";
+			$sql_pull_prep=sqlsrv_prepare($db_connection,$sql_pull,array($transaction_id,$status_op));
+			sqlsrv_execute($sql_pull_prep);
+			$count_list_2=sqlsrv_fetch_array($sql_pull_prep,SQLSRV_FETCH_ASSOC);
+			
+	
+
+
+
+
+			$lo=$count_list['location'];
+
+			$sql_pull_comp="SELECT * FROM liquidation.dbo.companyprofile where companylocation=?";
+			$sql_pull_comp_2=sqlsrv_prepare($db_connection,$sql_pull_comp,array($lo));
+			sqlsrv_execute($sql_pull_comp_2);
+			$company=sqlsrv_fetch_array($sql_pull_comp_2,SQLSRV_FETCH_ASSOC);
+
+
+
+
+
+
+
+
+
+
+			$this->setFont("Arial","",10);
+			$this->setFont("Arial","B",16);
+			$this->Cell(0,35,"DUFIL GROUP",0,0,"L");
+			$this->LN(20);
+			$this->Image($company['logoaddress'],0,0);
+			$this->setFont("Arial","",10);
+			$this->Cell(0,10,"Company:...........................................",0,0,"L");
+			$this->Cell(-440,8,$company['companyname'],0,0,"C");
+			//$count_list
+			$this->Cell(0,10,"Transaction ID:..........................................................................................",0,0,"R");
+			$this->Cell(0,7,$count_list['transid'],0,0,"R");
+			$this->LN(7);
+			//$this->Cell(0,7,$lo,0,0,"R");
+			//$this->LN(7);
+
+
+			$this->LN(7);
+			$this->Cell(0,10,"Location:.....................................",0,0,"L");
+			$this->Cell(-480,9,$count_list['location'],0,0,"C");
+			$this->LN(7);
+			$this->Cell(0,10,"Name:.........................................",0,0,"L");
+			$this->Cell(-480,9,$count_list['fullname'],0,0,"C");
+			$this->LN(7);
+			$this->setFont("Arial","B",16);
+			$this->Cell(0,10,"GENERAL LIQUIDATION STATEMENT (GLS)",0,0,"C");
+			$this->LN(7);
+			$this->setFont("Arial","",10);
+			$this->Cell(0,10,"Period:....................................",0,0,"C");
+			$this->Cell(-280,10,$count_list['op_mon']."- ".$count_list['op_year'],0,0,"C");
+			//$this->Cell(-80,9,$count_list['fullname'],0,0,"C");
+			$this->Cell(0,10,"Date:......................................",0,0,"R");
+			$this->Cell(-45,10,$count_list['dateofsubmit'],0,0,"C");
+			$this->LN(10);
+			
+			$this->setFont("Arial","",8);
+			$this->Cell(8,10,"No.",1,0,"C");
+			$this->Cell(100,10,"Particulars",1,0,"C");
+			$this->Cell(12,10,"Ref.",1,0,"C");
+			$this->Cell(25,10,"Total Amount",1,0,"C");
+			//$this->Cell(15,10,"",1,0,"L");
+
+			$this->Cell(28,5,"Transport.",1,0,"C");
+			//$this->Cell(14,-5,"",1,0,"C");
+			//$this->Cell(14,-5,"",1,0,"C");
+			//$this->Cell(28,5,"Transport.",1,0,"C");
+
+			$this->Cell(28,5,"Meeting.",1,0,"C");
+
+			//$this->Cell(14,4,"",1,0,"C");
+			//$this->Cell(14,4,"",1,0,"C");
+			//$this->Cell(20,8,"Transport.",1,0,"C");
+			//$this->Cell(20,8,"Meeting.",1,0,"C");
+			$this->Cell(18,10,"Electricity",1,0,"C");
+			$this->Cell(18,10,"Medical",1,0,"C");
+			$this->Cell(22,10,"House Repairs",1,0,"C");
+			$this->Cell(20,10,"Others",1,0,"C");
+
+
+
+
+
+			//first row
+			$this->LN(10);
+			$this->Cell(145,0,"",1,0,"C");
+			$this->Cell(14,-5,"Air",1,0,"C");
+			$this->Cell(14,-5,"Land",1,0,"C");
+			$this->Cell(14,-5,"Room",1,0,"C");
+			$this->Cell(14,-5,"Feeding",1,0,"C");
+			$this->LN(0);
+			//one
+			//for($i=1;$i<=10; $i++){
+			$this->Cell(8,4,"1",1,0,"C");
+			$this->Cell(100,4,$count_list['ref_1'],1,0,"L");
+			$this->Cell(12,4,$count_list['des_1'],1,0,"C");
+			$this->Cell(25,4,$count_list['num_1'],1,0,"C");
+			//$this->Cell(15,10,"",1,0,"L")
+			$this->Cell(14,4,$count_list['num_1'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_1'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_1'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_1'],1,0,"C");
+			$this->Cell(18,4,$count_list['num_1'],1,0,"C");
+			$this->Cell(18,4,$count_list['num_1'],1,0,"C");
+			$this->Cell(22,4,$count_list['num_1'],1,0,"C");
+			$this->Cell(20,4,$count_list['num_1'],1,0,"C");
+			//$this->Cell(20,4,"",1,0,"C");
+			$this->LN(4);
+			//}
+			
+			//two
+			$this->Cell(8,4,"2",1,0,"C");
+			$this->Cell(100,4,$count_list['ref_2'],1,0,"L");
+			$this->Cell(12,4,$count_list['des_2'],1,0,"C");
+			$this->Cell(25,4,$count_list['num_2'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_2'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_2'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_2'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_2'],1,0,"C");
+			$this->Cell(18,4,$count_list['num_2'],1,0,"C");
+			$this->Cell(18,4,$count_list['num_2'],1,0,"C");
+			$this->Cell(22,4,$count_list['num_2'],1,0,"C");
+			$this->Cell(20,4,$count_list['num_2'],1,0,"C");
+			$this->LN(4);
+
+						//three
+			$this->Cell(8,4,"3",1,0,"C");
+			$this->Cell(100,4,$count_list['ref_3'],1,0,"L");
+			$this->Cell(12,4,$count_list['des_3'],1,0,"C");
+			$this->Cell(25,4,$count_list['num_3'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_3'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_3'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_3'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_3'],1,0,"C");
+			$this->Cell(18,4,$count_list['num_3'],1,0,"C");
+			$this->Cell(18,4,$count_list['num_3'],1,0,"C");
+			$this->Cell(22,4,$count_list['num_3'],1,0,"C");
+			$this->Cell(20,4,$count_list['num_3'],1,0,"C");
+			$this->LN(4);
+
+						//four
+			$this->Cell(8,4,"4",1,0,"C");
+			$this->Cell(100,4,$count_list['ref_4'],1,0,"L");
+			$this->Cell(12,4,$count_list['des_4'],1,0,"C");
+			$this->Cell(25,4,$count_list['num_4'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_4'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_4'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_4'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_4'],1,0,"C");
+			$this->Cell(18,4,$count_list['num_4'],1,0,"C");
+			$this->Cell(18,4,$count_list['num_4'],1,0,"C");
+			$this->Cell(22,4,$count_list['num_4'],1,0,"C");
+			$this->Cell(20,4,$count_list['num_4'],1,0,"C");
+			$this->LN(4);
+
+						//five
+			$this->Cell(8,4,"5",1,0,"C");
+			$this->Cell(100,4,$count_list['ref_5'],1,0,"L");
+			$this->Cell(12,4,$count_list['des_5'],1,0,"C");
+			$this->Cell(25,4,$count_list['num_5'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_5'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_5'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_5'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_5'],1,0,"C");
+			$this->Cell(18,4,$count_list['num_5'],1,0,"C");
+			$this->Cell(18,4,$count_list['num_5'],1,0,"C");
+			$this->Cell(22,4,$count_list['num_5'],1,0,"C");
+			$this->Cell(20,4,$count_list['num_5'],1,0,"C");
+			$this->LN(4);
+
+						//six
+			$this->Cell(8,4,"6",1,0,"C");
+			$this->Cell(100,4,$count_list['ref_6'],1,0,"L");
+			$this->Cell(12,4,$count_list['des_6'],1,0,"C");
+			$this->Cell(25,4,$count_list['num_6'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_6'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_6'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_6'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_6'],1,0,"C");
+			$this->Cell(18,4,$count_list['num_6'],1,0,"C");
+			$this->Cell(18,4,$count_list['num_6'],1,0,"C");
+			$this->Cell(22,4,$count_list['num_6'],1,0,"C");
+			$this->Cell(20,4,$count_list['num_6'],1,0,"C");
+			$this->LN(4);
+
+						//seven
+			$this->Cell(8,4,"7",1,0,"C");
+			$this->Cell(100,4,$count_list['ref_7'],1,0,"L");
+			$this->Cell(12,4,$count_list['des_7'],1,0,"C");
+			$this->Cell(25,4,$count_list['num_7'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_7'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_7'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_7'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_7'],1,0,"C");
+			$this->Cell(18,4,$count_list['num_7'],1,0,"C");
+			$this->Cell(18,4,$count_list['num_7'],1,0,"C");
+			$this->Cell(22,4,$count_list['num_7'],1,0,"C");
+			$this->Cell(20,4,$count_list['num_7'],1,0,"C");
+			$this->LN(4);
+
+						//eight
+			$this->Cell(8,4,"8",1,0,"C");
+			$this->Cell(100,4,$count_list['ref_8'],1,0,"L");
+			$this->Cell(12,4,$count_list['des_8'],1,0,"C");
+			$this->Cell(25,4,$count_list['num_8'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_8'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_8'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_8'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_8'],1,0,"C");
+			$this->Cell(18,4,$count_list['num_8'],1,0,"C");
+			$this->Cell(18,4,$count_list['num_8'],1,0,"C");
+			$this->Cell(22,4,$count_list['num_8'],1,0,"C");
+			$this->Cell(20,4,$count_list['num_8'],1,0,"C");
+			$this->LN(4);
+
+						//nine
+			$this->Cell(8,4,"9",1,0,"C");
+			$this->Cell(100,4,$count_list['ref_9'],1,0,"L");
+			$this->Cell(12,4,$count_list['des_9'],1,0,"C");
+			$this->Cell(25,4,$count_list['num_9'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_9'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_9'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_9'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_9'],1,0,"C");
+			$this->Cell(18,4,$count_list['num_9'],1,0,"C");
+			$this->Cell(18,4,$count_list['num_9'],1,0,"C");
+			$this->Cell(22,4,$count_list['num_9'],1,0,"C");
+			$this->Cell(20,4,$count_list['num_9'],1,0,"C");
+			$this->LN(4);
+
+						//ten
+			$this->Cell(8,4,"10",1,0,"C");
+			$this->Cell(100,4,$count_list['ref_10'],1,0,"L");
+			$this->Cell(12,4,$count_list['des_10'],1,0,"C");
+			$this->Cell(25,4,$count_list['num_10'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_10'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_10'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_10'],1,0,"C");
+			$this->Cell(14,4,$count_list['num_10'],1,0,"C");
+			$this->Cell(18,4,$count_list['num_10'],1,0,"C");
+			$this->Cell(18,4,$count_list['num_10'],1,0,"C");
+			$this->Cell(22,4,$count_list['num_10'],1,0,"C");
+			$this->Cell(20,4,$count_list['num_10'],1,0,"C");
+			$this->LN(4);
+
+
+			$this->Cell(120,4,"TOTAL",1,0,"C");
+			$this->Cell(25,4,"",1,0,"L");
+			$this->Cell(14,4,"",1,0,"L");
+			$this->Cell(14,4,"",1,0,"C");
+			$this->Cell(14,4,"",1,0,"C");
+			$this->Cell(14,4,"",1,0,"C");
+			$this->Cell(18,4,"",1,0,"C");
+			$this->Cell(18,4,"",1,0,"C");
+			$this->Cell(22,4,"",1,0,"C");
+			$this->Cell(20,4,"",1,0,"C");
+			$this->LN(4);
+			
+			$this->Cell(120,4,"Total:",1,0,"L");
+			$this->Cell(25,4,"",1,0,"L");
+			$this->Cell(134,16,"Remarks:",1,0,"L");
+			$this->LN(4);
+			$this->Cell(120,4,"Advances/IOU:    ".  $count_list['advanceiou'],1,0,"L");
+			//$this->Cell(25,3,$count_list['advanceiou'],1,0,"L");
+			//$this->Cell(0,7,$count_list['transid'],0,0,"R");
+
+			$this->LN(4);
+			$this->Cell(120,4,"Cash Refunded:    ".$count_list['cashrequest'],1,0,"L");
+			//$this->Cell(25,3,$count_list['cashrequest'],1,0,"L");
+			$this->Cell(25,4,"",1,0,"L");
+			$this->LN(4);
+			$this->Cell(120,4,"Due from Company"."  "."Put company here",1,0,"L");
+			$this->Cell(25,4,"",1,0,"L");
+			//$this->Cell(25,4,"",1,0,"L");
+
+
+			//$this->LN(7);
+			$this->LN(15);
+			$this->setFont("Arial","B",9);
+			$this->Cell(80,8,"Submitted by",1,0,"C");
+			$this->Cell(65,8,"Checked by",1,0,"C");
+			$this->Cell(65,8,"",1,0,"C");
+			$this->Cell(69,8,"Approved by",1,0,"C");
+			$this->LN(8);
+			$this->Cell(80,17,"",1,0,"C");
+			$this->Cell(65,17,"",1,0,"C");
+			$this->Cell(65,17,"",1,0,"C");
+			$this->Cell(69,17,"",1,0,"C");
+			$this->LN(17);
+			$this->Cell(80,5,$count_list['fullname'],1,0,"C");
+			$this->Cell(65,5,"ACCOUNTS",1,0,"C");
+			$this->Cell(65,5,"NOTED",1,0,"C");
+			$this->Cell(69,5,"GMF/CFO",1,0,"C");
+			$this->LN(7);
+
+			//$this->Cell(0,10,$ref_num,1,0,"L");
+
+
+
+
+											
+		
+													
+
+
+
+			//No	Particulars	Ref.	Total       Amount		Transport		Meeting		Electricity	Medical	House Repairs	Others
+					//Air	Land	Room	Feeding				
+			
+
+								
+
+
+
+
+
+
+
+
+
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		}
+		
+
+	}
+
+	function formatdetails($db_connection){
+		
+/*
+
+		$this->setFont("Arial","",10);
+		$this->Cell(0,10,"STAFF NO:__________________________",0,0,"L");
+		$this->Cell(-150,10,$current_details_pick['staffid'],0,0,"R");
+		$this->Cell(0,10,"LOCATION:____________________________________",0,0,"R");
+		$this->Cell(-10,10,$current_details_pick['stafflocation'],0,0,"R");
+		$this->LN(10);
+		
+		$this->Cell(0,10,"DATE/TIME:_______________________________",0,0,"L");
+		$this->Cell(-140,10,$current_details_pick['dateuse'],0,0,"R");
+		
+		$this->Cell(0,10,"TYPE OF LOAN:_______________________________",0,0,"R");
+		$this->Cell(-2,10,$current_details_pick['loanoption'],0,0,"R");
+	
+		$this->LN();
+		$this->setFont("Arial","",10);
+
+		$this->Cell(0,10,"NAME: _________________________________________________________________________________________",0,0,"L");
+		$this->Cell(-200,10,$current_details_pick['fullname'],0,0,"C");
+		$this->LN(10);
+		$this->setFont("Arial","",10);
+		$this->Cell(0,10,"DEPARTMENT:__________________________________________________________________________________",0,0,"L");
+		$this->Cell(-200,10,$current_details_pick['staffdept'],0,0,"C");
+		$this->LN(10);
+		$this->setFont("Arial","",10);
+		$this->Cell(0,10,"POSITION:______________________________________________________________________________________",0,0,"L");
+		$this->Cell(-200,10,$current_details_pick['position'],0,0,"C");
+		$this->LN(10);
+		$this->Cell(0,10,"AMOUNT:_______________________________________________________________________________________",0,0,"L");
+		$this->LN(10);
+		$this->Cell(0,10,"DURATION OF PAYMENT:_________________________________________________________________________",0,0,"L");
+		$this->LN();
+		$this->Cell(0,10,"REASON(S):_____________________________________________________________________________________",0,0,"L");
+		$this->LN();
+		$this->Cell(0,10,"HOD's REASON FOR APPROVAL:___________________________________________________________________",0,0,"L");
+		$this->LN();
+		
+		$this->Cell(0,25,"_______________________",0,0,"L");
+		$this->Cell(-80,25,"_____________________",0,0,"R");
+		$this->Cell(0,25,"_______________________",0,0,"R");
+		$this->LN(5);
+		$this->Cell(0,25,"APPLICANT",0,0,"L");
+		$this->Cell(-80,25,"HEAD OF DEPARTMENT",0,0,"R");
+		$this->Cell(0,25,"HR MANAGER",0,0,"R");
+		$this->LN(15);
+		$this->Cell(0,25,"_______________________________",0,0,"C");
+		$this->Cell(-200,35,"FACTORY MANAGER",0,0,"C");
+		$this->LN(20);
+		$this->setFont("Arial","U",10);
+		$this->Cell(0,25,"For Acconnt Department Use Only",0,0,"L");
+		$this->LN(10);
+		$this->setFont("Arial","",10);
+		$this->Cell(0,25,"Outstanding Loan:.................................................................................................................",0,0,"L");
+		$this->LN(10);
+		$this->setFont("Arial","",10);
+		$this->Cell(0,25,"Maximum Loan Allowable:...........................................................................................................",0,0,"L");
+
+		$this->LN(25);
+		$this->Cell(0,25,"_______________________________",0,0,"C");
+		$this->Cell(-200,35,"FINANCIAL CONTROLLER",0,0,"C");
+		$this->LN(50);
+		$this->setFont("Arial","",6);
+		$this->Cell(0,10,"Copyright 2020-2021, Dufil MIS Department ",0,0,"C");
+		
+		$this->LN(60);
+		//$this->RotatedText(35,190," a t e r m a r k   d e m o",45);
+		$this->setFont("Arial","U",14);
+		$this->Cell(0,0,"LOAN GURANTEE AGREEMENT",0,0,"L");
+
+		$this->LN(10);
+		$this->setFont("Arial","",10);
+		$this->Cell(0,0,"I, Mr./Mrs./ Miss_____________________________________________________________,do hereby agree to guarantee",0,0,"L");
+		$this->LN(10);
+		$this->setFont("Arial","",10);
+		$this->Cell(0,0,"Mr./Mrs./Miss___________________________________________________________,(hereafter called the Borrower) who",0,0,"L");
+		$this->LN(10);
+		$this->setFont("Arial","",10);
+		$this->Cell(0,0,"applied for a loan of (N)_____________________________________________ from  ".$currentloan_loc['companyname']."",0,0,"L");
+		$this->LN(10);
+		$this->setFont("Arial","",10);
+		$this->Cell(0,0,",(hereafter called the  Company) WHEREAS  Mr./Mrs./Miss ______________________________________________ has",0,0,"L");
+		$this->LN(10);
+		$this->setFont("Arial","",10);
+		$this->Cell(0,0,"",0,0,"L");
+*/
+	}
+	
+
+
+	function userdetails($db_connection){
+/*		
+		if(isset($_SESSION['stafflog'])){
+			$useridusednow=$_SESSION['stafflog'];
+		$date_nw=Date("Y-m-d");
+		$userst="on";
+		$current_details=sqlsrv_query($db_connection,"SELECT * FROM dbo.staff_transactionallogleave where staffid='$useridusednow' and status='$userst'");
+		$current_details_pick=sqlsrv_fetch_array($current_details,SQLSRV_FETCH_ASSOC);
+
+		$this->setFont("Arial","B",11);
+		$this->Cell(-150,-430,$current_details_pick['staffid'],0,0,"R");
+		$this->Cell(0,-430,$current_details_pick['stafflocation'],0,0,"R");
+		$this->LN(10);
+		
+		$this->Cell(50,-430,$current_details_pick['dateuse'],0,0,"R");
+		$this->Cell(0,-430,$current_details_pick['leave'],0,0,"R");
+		$this->LN(10);
+		$this->setFont("Arial","B",11);
+		$this->Cell(0,-430,$current_details_pick['fullname'],0,0,"C");
+		$this->LN(10);
+		$this->Cell(0,-430,$current_details_pick['staffdept'],0,0,"C");
+		$this->LN(10);
+		$this->Cell(0,-430,$current_details_pick['position'],0,0,"C");
+		$this->LN(10);
+		$this->setFont("Arial","B",11);
+		$this->Cell(60,-430,$current_details_pick['periodfrom'],0,0,"R");
+		$this->Cell(0,-430,$current_details_pick['periodto'],0,0,"R");
+		//$this->LN();
+		$this->setFont("Arial","B",12);
+		$this->Cell(-200,-576,$current_details_pick['stafflocation']."   "."FACTORY",0,0,"C");
+		$this->Cell(0,-410,$current_details_pick['duration'],0,0,"C");
+		$this->Cell(-200,-390,$current_details_pick['reason'],0,0,"C");
+		$this->Cell(200,-370,$current_details_pick['reliever1'],0,0,"C");
+		$this->LN(2);
+		$this->Cell(200,-355,$current_details_pick['reliever2'],0,0,"C");
+
+
+
+
+
+		//$this->setFont("Arial","B",11);
+		//$this->Cell(18,-400,"Mathematics and English",0,0,"C");
+
+
+	}
+
+*/
+}
+
+
+	function adminpage(){
+		
+		
+	}
+
+
+	function footernote(){
+		
+	}
+}
+//end of class
+
+
+$pdf=new babatunde();
+$pdf->AddPage("L");
+//$pdf->header();
+$pdf->firstdetails($db_connection);
+$pdf->formatdetails($db_connection);
+$pdf->userdetails($db_connection);
+//$pdf->Image($db_connection,$company['companylogo']);
+//$pdf->adminpage();
+$pdf->footernote();
+$pdf->Output();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+?>
+
+
+
+
+
+
+//

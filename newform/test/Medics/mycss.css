@@ -1,0 +1,38 @@
+.main-section{
+	margin: auto;
+	margin-top: 100px;
+}
+.modal-content{
+	padding: 10px 20px 20px;
+	margin-bottom: 500%;
+
+}
+.onlineMed{
+background-image: url(onlineMed/../Image/approvalback.png);
+background-size: cover ;
+background-repeat: no-repeat;
+-webkit-background-size:cover;
+-moz-background-size:cover;
+-o-background-size:cover;
+background-position: center; 
+
+}
+h3{
+	padding: 10px 5px 20px;
+	height: 80px;
+	width: 200px;
+	margin :auto;
+	font-weight: bold;
+}
+button{
+	width :0px;
+	margin: 0px 0px 0px;
+}
+.btn{
+	font-size: 20px;
+	padding: 0px;
+	border: 0px;
+	border-radius: 5px;
+	border-bottom: 4px solid;
+}
+.btn:hover, .btn:focus

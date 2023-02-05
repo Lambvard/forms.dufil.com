@@ -1,0 +1,252 @@
+body{
+	font-family: 'Tangerine', serif;
+	overflow: hidden;        
+}
+
+@media screen and (min-width: 600px){
+	.bodyframe{
+	background-image: url('../../images/dig5.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	height: 500px;
+	
+	
+}
+
+.reportlabel{
+	font-size: 55px;
+	color: red;
+
+}
+.nav-link{
+			color: white;
+}
+.nav-link:hover{
+	
+	background-color:  #4B026D;
+	padding: 10px;
+	border-radius: 10px;
+	color: white;
+}
+.frontform{
+	margin-top: 400px;
+}
+}
+
+
+@media screen and (min-width: 1366px){
+	.bodyframe{
+	background-image: url('../../images/dig5.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	height: 600px;
+	
+	
+}
+
+.reportlabel{
+	font-size: 55px;
+	color: red;
+
+}
+.nav-link{
+			color: white;
+}
+.nav-link:hover{
+	
+	background-color:  #4B026D;
+	padding: 10px;
+	border-radius: 10px;
+	color: white;
+}
+.frontform{
+	margin-top: 400px;
+}
+}
+
+
+@media screen and (min-width: 1600px){
+	.bodyframe{
+	background-image: url('../../images/dig5.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	height: 750px;
+	
+	
+}
+
+.reportlabel{
+	font-size: 55px;
+	color: red;
+
+}
+.nav-link{
+			color: white;
+}
+.nav-link:hover{
+	
+	background-color:  #4B026D;
+	padding: 10px;
+	border-radius: 10px;
+	color: white;
+}
+.frontform{
+	margin-top: 400px;
+}
+}
+
+
+@media screen and (min-width: 1920px){
+	.bodyframe{
+	background-image: url('../../images/dig5.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	height: 800px;
+	
+	
+}
+.reportlabel{
+	font-size: 55px;
+	color: red;
+
+}
+.nav-link{
+			color: white;
+}
+.nav-link:hover{
+	
+	background-color:  #4B026D;
+	padding: 10px;
+	border-radius: 10px;
+	color: white;
+}
+.frontform{
+	margin-top: 400px;
+}
+
+}
+
+
+@media screen and (min-width: 2256px){
+	.bodyframe{
+	background-image: url('../../images/dig5.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	height: 950px;
+	
+	
+}
+
+.reportlabel{
+	font-size: 55px;
+	color: red;
+
+}
+.nav-link{
+			color: white;
+}
+.nav-link:hover{
+	
+	background-color:  #4B026D;
+	padding: 10px;
+	border-radius: 10px;
+	color: white;
+}
+.frontform{
+	margin-top: 400px;
+}
+}
+@media screen and (min-width: 3200px){
+	.bodyframe{
+	background-image: url('../../images/dig5.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	height: 1050px;
+	
+	
+}
+
+.reportlabel{
+	font-size: 55px;
+	color: red;
+
+}
+.nav-link{
+			color: white;
+}
+.nav-link:hover{
+	
+	background-color:  #4B026D;
+	padding: 10px;
+	border-radius: 10px;
+	color: white;
+}
+.frontform{
+	margin-top: 400px;
+}
+
+}
+@media screen and (min-width: 2560px){
+	.bodyframe{
+	background-image: url('../../images/dig5.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	height: 1150px;
+	
+	
+}
+
+.reportlabel{
+	font-size: 55px;
+	color: red;
+
+}
+.nav-link{
+			color: white;
+}
+.nav-link:hover{
+	
+	background-color:  #4B026D;
+	padding: 10px;
+	border-radius: 10px;
+	color: white;
+}
+.frontform{
+	margin-top: 400px;
+}
+
+}
+
+
+@media screen and (max-width: 600px){
+	.bodyframe{
+	background-image: url('../../images/dig4.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	height: 400px;
+	background-color: #4B026D;
+	color: red;
+	}
+
+
+.reportlabel{
+	font-size: 55px;
+	color: red;
+
+}
+.nav-link{
+			color: white;
+}
+.nav-link:hover{
+	
+	background-color:  #4B026D;
+	padding: 10px;
+	border-radius: 10px;
+	color: white;
+}
+.frontform{
+	margin-top: 400px;
+}
+}
+
+

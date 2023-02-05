@@ -1,0 +1,39 @@
+@media(max-width: 560px){
+
+}
+@media(min-width: 560px){
+	body{
+		background-image: url('../image/backone.png');
+		background-size: cover;
+	}
+	.tempborder{
+		border: 1px solid black;
+	}
+
+	.inputtext{
+		border-radius: 10px 10px 10px 10px;
+		height: 30px;
+		width: 100%;
+	}
+	.rowmargingtop{
+		/*margin-top: 200px;
+		
+		
+		
+		background-color: rgb(255,255,255);
+		opacity: 0.5;		
+		border-radius: 20px 20px 20px 20px;
+		height: 600px;
+		*/
+	}
+	.dashboardcontainer{
+		margin-top: 30px;
+		/*background-color: white;
+		height:auto;
+		border-radius: 20px 20px 20px 20px;
+		opacity: 0.9;
+		margin:auto;
+		width: 800px;*/
+
+	}
+}

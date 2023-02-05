@@ -1,0 +1,66 @@
+@media(min-width: 576px){
+
+}
+
+@media(min-width: 360px){
+
+}
+
+@media(min-width: 1200px){
+	#formlabel{
+		font-size: 18px;
+		font-family: sans-serif;
+	}
+	#frameid{
+		border: 0px solid gray;
+	}
+	.sidebardesign{
+		background-color:white ;
+	}
+	.but{
+		background-color: yellow;
+	}
+	.scalerfont{
+		font-family: sans-serif;
+		font-size: 15px;
+		color:#563d7c;
+	}
+
+	.scalerfontindex{
+		font-family: sans-serif;
+		font-size: 85px;
+		color:white;
+	}
+	
+
+	.sidebarfont{
+		font-size: 20px;
+		font-family: sans-serif;
+		color:grey;
+
+	}
+	a{
+		color: red;
+	}
+	ul{
+		list-style-type: none;
+	}
+	.padder{
+		padding: 60px;
+		padding-left: 200px;
+		
+	}
+	.padders{
+		padding: 60px;
+		padding-left: 60px;
+	}
+	.padders2{
+		padding: 20px;
+		padding-left: 10px;
+	}
+	
+	list-group-item:hover{
+		background-color: blue;
+	}
+}
+}

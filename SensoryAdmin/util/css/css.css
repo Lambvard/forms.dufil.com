@@ -1,0 +1,27 @@
+.contentframe{
+	width: 1400px;
+	margin: auto;
+	overflow: auto;
+
+}
+body,html{
+	height: 100%;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	
+	-webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.nav-item{
+	color: white;
+}
+.usercontentframe{
+	width: 1200px;
+	margin: auto;
+	overflow: auto;
+
+}

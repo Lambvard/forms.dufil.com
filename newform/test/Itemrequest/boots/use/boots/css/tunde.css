@@ -1,0 +1,56 @@
+body{
+	font-family: 'Tangerine', serif;
+	overflow: hidden;        
+}
+
+@media screen and (min-width: 600px){
+	.mainlabel{
+		font-weight: 20px;
+		font-weight: bolder;
+		color: purple;
+	}
+	a{
+		text-decoration: none;
+	}
+}
+
+
+@media screen and (min-width: 1366px){
+
+}
+
+
+@media screen and (min-width: 1600px){
+
+}
+
+
+@media screen and (min-width: 1920px){
+	.mainlabel{
+		font-weight: 20px;
+		font-weight: bolder;
+		color: purple;
+	}
+	a{
+		text-decoration: none;
+	}
+
+}
+
+
+@media screen and (min-width: 2256px){
+
+}
+@media screen and (min-width: 3200px){
+
+}
+@media screen and (min-width: 2560px){
+
+}
+
+
+@media screen and (max-width: 600px){
+
+}
+
+

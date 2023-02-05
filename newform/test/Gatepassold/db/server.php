@@ -1,0 +1,513 @@
+<?php
+include("db.php");
+session_start();
+
+if(isset($_POST['loansavedetailsnow'])){
+	$userfullname=$_POST['loanfullname'];
+	$userlocation=$_POST['loadlocation'];
+	$userdepts=$_POST['loaddept'];
+	$userposition=$_POST['loanposition'];
+	$useramount=$_POST['loanamount'];
+	$useramountwords=$_POST['loanamountd'];
+	$userduration=$_POST['loadduration'];
+	$userreason=$_POST['loadreason'];
+	$userstaffid=$_POST['loanstaffid'];
+	$userpicktypeofloan="PersonalLoan";
+	$moneypay=$_POST['moneypay'];
+	$pending="on";
+	$date=Date("Y-m-d");
+	$time=Date("h:m:i");
+	$day=Date("d");
+	$month=Date("M");
+	$year=Date("Y");
+
+	$guarantor1name=$_POST['guan1fullname'];
+	$guarantor1location=$_POST['guan1location'];
+	$guarantor1dept=$_POST['guan1loaddept'];
+	$guarantor1position=$_POST['guan1position'];
+	$guarantor1desin=$_POST['design'];
+	$guan1number=$_POST['pnumber'];
+	$guarantor1staffid=$_POST['guarantor1staffid'];
+	$guan1empdate=$_POST['guan1empdate'];
+
+	$guarantor2name=$_POST['guan2fullname'];
+	$guarantor2location=$_POST['guan2location'];
+	$guarantor2dept=$_POST['guan2loaddept'];
+	$guarantor2position=$_POST['guan2position'];
+	$guarantor2number=$_POST['witnesspnumber'];
+	$guarantor2staffid=$_POST['guarantor2staffid'];
+	$guarantor2address=$_POST['witnessaddress'];
+	$guan2empdate=$_POST['guan2empdate'];
+
+	
+
+
+
+
+
+
+//var_dump($_POST);
+	
+$save_leave_form=sqlsrv_query($db_connection,"SELECT * FROM dbo.staff_transactionallogloan where staffid='$userstaffid' and status='$pending'");
+$save_leave_form_count=sqlsrv_has_rows($save_leave_form);
+
+$checker=[];
+
+	if($save_leave_form_count>0){
+		//header("Location:../index.php?loan=loanpendinglog");
+		$checker['currentloanid']="existuser";
+		
+
+	}else{
+
+			$pick_last_loan=sqlsrv_query($db_connection,"SELECT count(*) as loannumberlast FROM dbo.staff_transactionallogloan where stafflocation='$userlocation' and monthoftrans='$month'");
+			$pick_last_loan_id=sqlsrv_fetch_array($pick_last_loan,SQLSRV_FETCH_ASSOC);
+
+			$loanuserid=$userlocation."/".$date."/LOAN-".($pick_last_loan_id['loannumberlast']+1);
+			//$loanuseridfinal="useridtest";
+	
+
+
+		$save_leave_save=sqlsrv_query($db_connection,"INSERT INTO dbo.staff_transactionallogloan (fullname,staffid,stafflocation,staffdept,loanamount,loanamountwords,loanoption,paymentdur,loanreason,position,monthpay,dateuse,timeuse,status,guarantor1name,guarantor1location,guarantor1dept,guarantor1staffid,guarantor1position,guarantor1design,guarantor1phone,guarantor1emp,guarantor2name,guarantor2location,guarantor2dept,guarantor2staffid,guarantor2position,witnessphone,witnessaddress,guarantor2emp,dayoftrans,monthoftrans,yearoftrans,loanidtrack)values('$userfullname','$userstaffid','$userlocation','$userdepts','$useramount','$useramountwords','$userpicktypeofloan','$userduration','$userreason','$userposition','$moneypay','$date','$time','$pending','$guarantor1name','$guarantor1location','$guarantor1dept','$guarantor1staffid','$guarantor1position','$guarantor1desin','$guan1number','$guan1empdate','$guarantor2name','$guarantor2location','$guarantor2dept','$guarantor2staffid','$guarantor2position','$guarantor2number','$guarantor2address','$guan2empdate','$day','$month','$year','$loanuserid')");
+		
+
+		$checker['currentloanid']=$loanuserid;
+		
+		
+
+	}
+	echo json_encode($checker);
+
+}
+
+elseif (isset($_POST['pullstaff'])) {
+	$loanstaffiduse=$_POST['loanstaffid'];
+	$guarantor1=$_POST['guarantor1staffid'];
+	$guarantor2=$_POST['guarantor2staffid'];
+	$loanpicker=$_POST['loanpick'];
+	$con_user_loan=sqlsrv_query($db_connection,"SELECT * FROM dbo.staffdetailsloan where Staffid='$loanstaffiduse'");
+	
+
+	$res="I have connected";
+
+	echo json_encode($res);
+
+	
+	
+	
+}
+elseif (isset($_POST['logoutloan'])) {
+			//session_start();
+			$staffloanid=$_SESSION['loanuser'];
+			$temstatus_now="on";
+		$user_query_logoutloan=sqlsrv_query($db_connection,"SELECT * FROM dbo.staff_transactionallogloan WHERE staffid='$staffloanid' AND status='$temstatus_now'");
+		$pick_user_details_logoutloan=sqlsrv_has_rows($user_query_logoutloan);
+		if($pick_user_details_logoutloan>0){
+			$update=sqlsrv_query($db_connection,"UPDATE dbo.staff_transactionallogloan SET status='off' WHERE staffid='$staffloanid'");
+
+			session_destroy();
+			unset($_SESSION['loanuser']);
+			unset($_SESSION['sesguan1']);
+			unset($_SESSION['sesguan2']);
+			unset($_SESSION['loanuserloc']);
+			header("Location:../index.php");
+
+		}else{
+			session_destroy();
+			unset($_SESSION['loanuser']);
+			unset($_SESSION['sesguan1']);
+			unset($_SESSION['sesguan2']);
+			unset($_SESSION['loanuserloc']);
+			header("Location:../index.php");
+		}
+
+}elseif (isset($_POST['staffconfirm'])){
+	$staffloan=$_POST['loanstaffid'];
+	$loan_user=sqlsrv_query($db_connection,"SELECT * FROM dbo.staffdetailsloan where Staffid='$staffloan'");
+	$loan_user_2=sqlsrv_fetch_array($loan_user,SQLSRV_FETCH_ASSOC);
+	$loan_user_count=sqlsrv_has_rows($loan_user);
+		$loanstaff_store=[];
+	if($loan_user_count>0){
+			$loanstaff_store['fullname']=$loan_user_2['surname']." ".$loan_user_2['firstname']." ".$loan_user_2['othernames'];
+			$loanstaff_store['dept']=$loan_user_2['Dept'];
+			$loanstaff_store['loc']=$loan_user_2['stafflocation'];
+			echo json_encode($loanstaff_store);
+	}else{
+		echo "Not Connected";
+	}
+
+
+}elseif (isset($_POST['guastaffconfirm'])){
+	$guarantor1staffid=$_POST['guarantor1staffid'];
+	$loan_gua=sqlsrv_query($db_connection,"SELECT * FROM dbo.staffdetailsloan where Staffid='$guarantor1staffid'");
+	$loan_gua_2=sqlsrv_fetch_array($loan_gua,SQLSRV_FETCH_ASSOC);
+	$loan_gua_count=sqlsrv_has_rows($loan_gua);
+		$loangua_store=[];
+	if($loan_gua_count>0){
+			$loangua_store['fullname']=$loan_gua_2['surname']." ".$loan_gua_2['firstname']." ".$loan_gua_2['othernames'];
+			$loangua_store['dept']=$loan_gua_2['Dept'];
+			$loangua_store['loc']=$loan_gua_2['stafflocation'];
+			echo json_encode($loangua_store);
+	}else{
+		echo "Not Connected";
+	}
+
+
+}elseif (isset($_POST['gua2staffconfirm'])){
+	$guarantor2staffid=$_POST['guarantor2staffid'];
+	$loan_gua2=sqlsrv_query($db_connection,"SELECT * FROM dbo.staffdetailsloan where Staffid='$guarantor2staffid'");
+	$loan_gua2_2=sqlsrv_fetch_array($loan_gua2,SQLSRV_FETCH_ASSOC);
+	$loan_gua2_count=sqlsrv_has_rows($loan_gua2);
+		$loangua2_store=[];
+	if($loan_gua2_count>0){
+			$loangua2_store['fullname']=$loan_gua2_2['surname']." ".$loan_gua2_2['firstname']." ".$loan_gua2_2['othernames'];
+			$loangua2_store['dept']=$loan_gua2_2['Dept'];
+			$loangua2_store['loc']=$loan_gua2_2['stafflocation'];
+			echo json_encode($loangua2_store);
+	}else{
+		echo "Not Connected";
+	}
+
+
+}elseif (isset($_POST['carsavedetails'])){
+
+	$carstaffid=$_POST['loanstaffid'];
+	$carfullname=$_POST['loanfullname'];
+	$carlocation=$_POST['loadlocation'];
+	$cardepts=$_POST['loaddept'];
+	$carposition=$_POST['carposition'];
+	$caramount=$_POST['caramount'];
+	$annualsalary=$_POST['annualsalary'];
+	$monthlysalary=$_POST['monthlysalary'];
+	$homeaddress=$_POST['homeaddress'];
+	$datajoined=$_POST['datajoined'];
+	$dateofbirth=$_POST['dateofbirth'];
+	$nextofkin=$_POST['nextofkin'];
+	$nextaddress=$_POST['nextaddress'];
+	$nextofkinrel=$_POST['nextofkinrel'];
+	$doyouhave=$_POST['doyouhave'];
+	$maker=$_POST['maker'];
+	$carreg=$_POST['carreg'];
+	$chassis=$_POST['chassis'];
+	$engineno=$_POST['engineno'];
+	$yearpurchase=$_POST['yearpurchase'];
+	$purpose=$_POST['purpose'];
+	$carpayable=$_POST['carpayable'];
+	$caryear=$_POST['caryear'];
+	//$carmonth=$_POST['carmonth'];
+	$guarantor1staffid=$_POST['guarantor1staffid'];
+	$guarantor1name=$_POST['guarantor1name'];
+	$guarantor1location=$_POST['guarantor1location'];
+	$guarantor1dept=$_POST['guarantor1dept'];
+	$carguaaddress=$_POST['carguaaddress'];
+	$guarantor2staffid=$_POST['guarantor2staffid'];
+	$guan2fullname=$_POST['guan2fullname'];
+	$guan2location=$_POST['guan2location'];
+	$guan2loaddept=$_POST['guan2loaddept'];
+	$carguaposition=$_POST['carguaposition'];
+	$pending="on";
+	$date=Date("Y-m-d");
+	$time=Date("h:m:i");
+	$day=Date("d");
+	$month=Date("M");
+	$year=Date("Y");
+
+										
+
+
+
+
+
+$save_car_form=sqlsrv_query($db_connection,"SELECT * FROM dbo.staff_transactionallogcar where staffid='$carstaffid' and status='$pending'");
+$save_car_form_count=sqlsrv_has_rows($save_car_form);
+
+$checker_car=[];
+
+	if($save_car_form_count>0){
+		//header("Location:../index.php?loan=loanpendinglog");
+		$checker_car['currentloanid']="Exist";
+		
+
+	}else{
+
+			$pick_last_loan=sqlsrv_query($db_connection,"SELECT count(*) as loannumberlast FROM dbo.staff_transactionallogcar where stafflocation='$carlocation' and month='$month'");
+			$pick_last_loan_id=sqlsrv_fetch_array($pick_last_loan,SQLSRV_FETCH_ASSOC);
+
+			$transid=$carlocation."/".$date."/CarLoan-".($pick_last_loan_id['loannumberlast']+1);
+
+		$save_car_save=sqlsrv_query($db_connection,"INSERT INTO dbo.staff_transactionallogcar (fullname,staffid,stafflocation,staffdept,staffposition,loanamount,annualsalary,monthlysalary,homeaddress,datajoined,dateofbirth,nextofkin,nextaddress,nextofkinrel,doyouhave,maker,carreg,chassis,engineno,yearpurchase,puropose,carpayable,caryear,guarantor1staffid,guarantor1name,guarantor1location,guarantor1dept,carguaaddress,guarantor2staffid,guan2fullname,guan2location,guan2loaddept,carguaposition,month,timenow,day,datenow,yearnow,status,transid
+)values('$carfullname','$carstaffid','$carlocation','$cardepts','$carposition','$caramount','$annualsalary','$monthlysalary','$homeaddress','$datajoined','$dateofbirth','$nextofkin','$nextaddress','$nextofkinrel','$doyouhave','$maker','$carreg','$chassis','$engineno','$yearpurchase','$purpose','$carpayable','$caryear','$guarantor1staffid','$guarantor1name','$guarantor1location','$guarantor1dept','$carguaaddress','$guarantor2staffid','$guan2fullname','$guan2location','$guan2loaddept','$carguaposition','$month','$time','$day','$date','$year','$pending','$transid')");
+
+
+		$checker_car['currentloanid']=$transid;
+		
+		
+
+	}
+	echo json_encode($checker_car);
+
+
+
+}elseif (isset($_POST['loguotuser'])){
+	$logout_id=$_POST['loanstaffid'];
+	$ts="on";
+
+	$logout_car=sqlsrv_query($db_connection,"SELECT * FROM dbo.staff_transactionallogcar WHERE staffid='$logout_id' AND status='$ts'");
+		$logout_car_loan=sqlsrv_has_rows($logout_car);
+		$out_car=[];
+		if($logout_car_loan>0){
+			$update=sqlsrv_query($db_connection,"UPDATE dbo.staff_transactionallogcar SET status='off' WHERE staffid='$logout_id'");
+			$out_car['logoutuseridplease']="outlog";
+		}//else{
+			//$out_car['logoutuserid']=="not";
+		//}
+		echo json_encode($out_car);
+
+}elseif (isset($_POST['logutusertemp'])) {
+
+	$logout_loan=$_POST['loanstaffid'];
+	$ts="on";
+
+	$logoutlon=sqlsrv_query($db_connection,"SELECT * FROM dbo.staff_transactionallogloan WHERE staffid='$logout_loan' AND status='$ts'");
+		$logout_loan_loan=sqlsrv_has_rows($logoutlon);
+		$out_loan=[];
+		if($logout_loan_loan>0){
+			$update_loan=sqlsrv_query($db_connection,"UPDATE dbo.staff_transactionallogloan SET status='off' WHERE staffid='$logout_loan'");
+			$out_loan['loanlog']="outlogloan";
+		}//else{
+			//$out_car['logoutuserid']=="not";
+		//}
+		echo json_encode($out_loan);
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+	$carstaffid="E11759";
+	$carfullname="Afolabi Babatunde A";
+	$carlocation="Afolabi Babatunde A";
+	$cardepts="Afolabi Babatunde A";
+	$carposition="Afolabi Babatunde A";
+	$caramount="Afolabi Babatunde A";
+	$annualsalary="Afolabi Babatunde A";
+	$monthlysalary="Afolabi Babatunde A";
+	$homeaddress="Afolabi Babatunde A";
+	$datajoined="Afolabi Babatunde A";
+	$dateofbirth="Afolabi Babatunde A";
+	$nextofkin="Afolabi Babatunde A";
+	$nextaddress="Afolabi Babatunde A";
+	$nextofkinrel="Afolabi Babatunde A";
+	$doyouhave="Afolabi Babatunde A";
+	$maker="Afolabi Babatunde A";
+	$carreg="Afolabi Babatunde A";
+	$chassis="Afolabi Babatunde A";
+	$engineno="Afolabi Babatunde A";
+	$yearpurchase="Afolabi Babatunde A";
+	$purpose="Afolabi Babatunde A";
+	$carpayable="Afolabi Babatunde A";
+	$caryear="Afolabi Babatunde A";
+	$carmonth="Afolabi Babatunde A";
+	$guarantor1staffid="E11759";
+	$guarantor1name="Afolabi Babatunde A";
+	$guarantor1location="Afolabi Babatunde A";
+	$guarantor1dept="Afolabi Babatunde A";
+	$carguaaddress="Afolabi Babatunde A";
+	$guarantor2staffid="E11759";
+	$guan2fullname="Afolabi Babatunde A";
+	$guan2location="Afolabi Babatunde A";
+	$guan2loaddept="Afolabi Babatunde A";
+	$carguaposition="Afolabi Babatunde A";
+	$pending="on";
+	$date=Date("Y-m-d");
+	$time=Date("h:m:i");
+	$day=Date("d");
+	$month=Date("M");
+	$year=Date("Y");
+
+
+$pick_last_loan=sqlsrv_query($db_connection,"SELECT count(*) as loannumberlast FROM dbo.staff_transactionallogcar where stafflocation='$carlocation' and month='$month'");
+			$pick_last_loan_id=sqlsrv_fetch_array($pick_last_loan,SQLSRV_FETCH_ASSOC);
+
+			$transid=$carlocation."/".$date."/CarLoan-".($pick_last_loan_id['loannumberlast']+1);
+
+
+
+
+
+	$save_car_save=sqlsrv_query($db_connection,"INSERT INTO dbo.staff_transactionallogcar (fullname,staffid,stafflocation,staffdept,loanamount,annualsalary,monthlysalary,homeaddress,datajoined,dateofbirth,nextofkin,nextaddress,nextofkinrel,doyouhave,maker,carreg,chassis,engineno,yearpurchase,puropose,carpayable,caryear,carmonth,guarantor1staffid,guarantor1name,guarantor1location,guarantor1dept,carguaaddress,guarantor2staffid,guan2fullname,guan2location,guan2loaddept,carguaposition,month,timenow,day,datenow,status,transid
+)values('$carstaffid','$carfullname','$carlocation','$cardepts','$caramount','$annualsalary','$monthlysalary','$homeaddress','$datajoined','$dateofbirth','$nextofkin','$nextaddress','$nextofkinrel','$doyouhave','$maker','$carreg','$chassis','$engineno','$yearpurchase','$purpose','$carpayable','$caryear','$carmonth','$guarantor1staffid','$guarantor1name','$guarantor1location','$guarantor1dept','$carguaaddress','$guarantor2staffid','$guan2fullname','$guan2location','$guan2loaddept','$carguaposition','$month','$time','$day','$date','$pending','$transid')");
+
+
+	echo "check now";
+
+//fullname,staffid,stafflocation,staffdept,loanamount,annualsalary,monthlysalary,homeaddress,datajoined,dateofbirth,nextofkin,nextaddress,nextofkinrel,doyouhave,maker,carreg,chassis,engineno,yearpurchase,puropose,carpayable,caryear,carmonth,guarantor1staffid,guarantor1name,guarantor1location,guarantor1dept,carguaaddress,guarantor2staffid,guan2fullname,guan2location,guan2loaddept,carguaposition,month,timenow,day,datenow,status,transid
+
+	//'$carposition',
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+$save_car_form=sqlsrv_query($db_connection,"SELECT * FROM dbo.staff_transactionallogcar where staffid='$carstaffid' ");
+$save_car_form_count=sqlsrv_has_rows($save_car_form);
+
+$checker_car=[];
+
+	if($save_car_form_count>0){
+		//header("Location:../index.php?loan=loanpendinglog");
+		$checker_car['userexist']="Exist";
+		echo "user exixt";
+		
+
+	}else{
+
+			$pick_last_loan=sqlsrv_query($db_connection,"SELECT count(*) as loannumberlast FROM dbo.staff_transactionallogcar where stafflocation='$carlocation' and month='$month'");
+			$pick_last_loan_id=sqlsrv_fetch_array($pick_last_loan,SQLSRV_FETCH_ASSOC);
+
+			$transid=$carlocation."/".$date."/CarLoan-".($pick_last_loan_id['loannumberlast']+1);
+
+		$save_car_save=sqlsrv_query($db_connection,"INSERT INTO dbo.staff_transactionallogcar (fullname,staffid,stafflocation,staffdept,loanamount,annualsalary,monthlysalary,homeaddress,datajoined,dateofbirth,nextofkin,nextaddress,nextofkinrel,doyouhave,maker,carreg,chassis,engineno,yearpurchase,puropose,carpayable,caryear,carmonth,guarantor1staffid,guarantor1name,guarantor1location,guarantor1dept,carguaaddress
+      ,guarantor2staffid,guan2fullname,guan2location,guan2loaddept,carguaposition,month,timenow,day,datenow,status,transid
+)values('$carstaffid','$carfullname','$carlocation','$cardepts','$carposition','$caramount','$annualsalary','$monthlysalary','$homeaddress','$datajoined','$dateofbirth','$nextofkin','$nextaddress','$nextofkinrel','$doyouhave','$maker','$carreg','$chassis','$engineno','$yearpurchase','$purpose','$carpayable','$caryear','$carmonth','$guarantor1staffid','$guarantor1name','$guarantor1location','$guarantor1dept','$carguaaddress','$guarantor2staffid','$guan2fullname','$guan2location','$guan2loaddept','$carguaposition','$pending','$date','$time','$day','$month','$year','$transid')");
+		
+
+		$checker_car['currentloanid']=$transid;
+
+
+		
+		
+
+	}
+	echo json_encode($checker_car)."<br>";
+	echo json_encode($save_car_save);
+*/
+	
+//fullname,staffid,stafflocation,staffdept,loanamount,loanamountwords,loanoption,paymentdur,loanreason,position,monthpay,dateuse,timeuse,status,guarantor1name,guarantor1location,guarantor1dept,guarantor1staffid,guarantor1position,guarantor1design,guarantor1phone,guarantor2name,guarantor2location,guarantor2dept,guarantor2staffid,guarantor2position,witnessphone,witnessaddress,dayoftrans,monthoftrans,yearoftrans,loanidtrack
+
+
+
+
+/*
+
+	$userfullname="Test 2";
+	$userlocation="Test 2";
+	$userdepts="Test 2";
+	$userposition="Test 2";
+	$useramount="Test 2";
+	$useramountwords="Test 2";
+	$userduration="Test 2";
+	$userreason="Test 2";
+	$userstaffid="E11759";
+	$userpicktypeofloan="PersonalLoan";
+	$moneypay="Test 2";
+	$pending="on";
+	$date=Date("Y-m-d");
+	$time=Date("h:m:i");
+	$day=Date("d");
+	$month=Date("M");
+	$year=Date("Y");
+
+	$guarantor1name="Test 2";
+	$guarantor1location="Test 2";
+	$guarantor1dept="Test 2";
+	$guarantor1position="Test 2";
+	$guarantor1desin="Test 2";
+	$guan1number="Test 2";
+	$guarantor1staffid="Test 2";
+
+	$guarantor2name="Test 2";
+	$guarantor2location="Test 2";
+	$guarantor2dept="Test 2";
+	$guarantor2position="Test 2";
+	$guarantor2number="Test 2";
+	$guarantor2staffid="Test 2";
+	$guarantor2address="Test 2";
+	$guan1empdate="Test 2";
+	$guan2empdate="Test 2";
+
+
+	$save_leave_form=sqlsrv_query($db_connection,"SELECT * FROM dbo.staff_transactionallogloan where staffid='$userstaffid' and status='$pending'");
+$save_leave_form_count=sqlsrv_has_rows($save_leave_form);
+
+$checker=[];
+
+	if($save_leave_form_count>0){
+		//header("Location:../index.php?loan=loanpendinglog");
+		$checker['userexist']="Exist";
+		
+
+	}else{
+
+			$pick_last_loan=sqlsrv_query($db_connection,"SELECT count(*) as loannumberlast FROM dbo.staff_transactionallogloan where stafflocation='$userlocation' and monthoftrans='$month'");
+			$pick_last_loan_id=sqlsrv_fetch_array($pick_last_loan,SQLSRV_FETCH_ASSOC);
+
+			$loanuserid=$userlocation."/".$date."/LOAN-".($pick_last_loan_id['loannumberlast']+1);
+			//$loanuseridfinal="useridtest";
+	
+
+
+		$save_leave_save=sqlsrv_query($db_connection,"INSERT INTO dbo.staff_transactionallogloan (fullname,staffid,stafflocation,staffdept,loanamount,loanamountwords,loanoption,paymentdur,loanreason,position,monthpay,dateuse,timeuse,status,guarantor1name,guarantor1location,guarantor1dept,guarantor1staffid,guarantor1position,guarantor1design,guarantor1phone,guarantor1emp,guarantor2name,guarantor2location,guarantor2dept,guarantor2staffid,guarantor2position,witnessphone,witnessaddress,guarantor2emp,dayoftrans,monthoftrans,yearoftrans,loanidtrack)values('$userfullname','$userstaffid','$userlocation','$userdepts','$useramount','$useramountwords','$userpicktypeofloan','$userduration','$userreason','$userposition','$moneypay','$date','$time','$pending','$guarantor1name','$guarantor1location','$guarantor1dept','$guarantor1staffid','$guarantor1position','$guarantor1desin','$guan1number','$guan1empdate','$guarantor2name','$guarantor2location','$guarantor2dept','$guarantor2staffid','$guarantor2position','$guarantor2number','$guarantor2address','$guan2empdate','$day','$month','$year','$loanuserid')");
+		
+
+		$checker['currentloanid']=$loanuserid;
+		
+		
+
+	}
+	echo json_encode($checker);
+
+*/
+
+
+?>
+

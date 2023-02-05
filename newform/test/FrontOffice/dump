@@ -1,0 +1,91 @@
+
+					<select class="form-control">
+							<?php 
+					while($conect_user_pull=sqlsrv_fetch_array($conect_dept,SQLSRV_FETCH_ASSOC)) {
+								echo '<option>'.$conect_user_pull['Department_name'].'</option>';
+				
+															}
+						?>
+					</select>
+					<input type="text" name="" class="form-control" placeholder="Staff ID" id="user_staffID_send">
+					
+
+
+					<label style="color: indigo;">Select all departments  </label> <input type="checkbox" name="" class="form-check-input">	
+
+				<label style="color: indigo;">Send to a Staff  </label> <input type="checkbox" name="" class="form-check-input" id="send_to_a_staff">	
+				</div>
+					<input type="text" name="" class="form-control" placeholder="Subject">
+				</div>
+
+				<div class="form-group mt-3">
+					
+					<textarea class="form-control" cols="6" rows="10" style=" resize: none;"></textarea>
+			
+					
+					</div>
+
+				
+				<div class="form-group mt-3">
+					<button class="btn btn-danger float float-right"><i class="icofont-save"></i></button>
+					
+				</div>
+			</div>
+		
+		
+
+
+
+
+
+		</div>
+
+
+
+
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<div class="col-sm-2">
+				<button type="button" class="btn btn-primary position-relative mt-5">
+  							<span style="font-size: 99px;">99</span>
+  						<!--<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+   								 99+-->
+   							 <span class="">Total Staff</span>
+  						</span>
+						</button>				
+			</div>
+			<div class="col-sm-2">
+				<button type="button" class="btn btn-primary position-relative mt-5">
+  							<span style="font-size: 99px;">99</span>
+  						<!--<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+   								 99+-->
+   							 <span class="">Location Staff</span>
+  						</span>
+						</button>	
+
+			</div>
+			<div class="col-sm-2">
+				
+				<button type="button" class="btn btn-primary position-relative mt-5">
+  							<span style="font-size: 99px;">99</span>
+  						<!--<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+   								 99+-->
+   							 <span class="">Outbox Mail</span>
+  						</span>
+						</button>	
+			</div>
