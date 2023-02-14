@@ -23,10 +23,10 @@ $ii=[];
 	<link rel="stylesheet" type="text/css" href="../resources/bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="../resources/bootstrap/css/bootstrap.min.css">
 	<script type="text/javascript" src="../resources/jquery/jquery-3.6.3.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="../resources/bootstrap/js/bootstrap.js">
+<!--	<link rel="stylesheet" type="text/css" href="../resources/bootstrap/js/bootstrap.js">-->
 	<link rel="stylesheet" type="text/css" href="../resources/ico/icofont.css">
 	<link rel="stylesheet" type="text/css" href="../DataTables/datatables.min.css"/>
- 
+ 		<script type="text/javascript" src="../resources/bootstrap/js/bootstrap.js"></script>
 	<script type="text/javascript" src="../DataTables/datatables.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -35,26 +35,41 @@ $ii=[];
 </head>
 <body>
 
+
+
 <section>
-	<div class="col-sm-4 offset-sm-2 mt-4 modal hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-					
-					<div class="col-sm-12 mt-3" style="color: white; font-size: 35px;"><strong>Login</strong>	</div>
-					<div class="form-group mt-3">
-						<input type="text" name="" placeholder="Enter your Mail" class="form-control">
-					</div>
+	<div >
+    <!-- Button HTML (to Trigger Modal) -->
+     
+    <!-- Modal HTML -->
+    <div id="myModal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Security Approval</h3>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                    	
+                    
+                    		<table >
+                    		<tr>
+                    			<td><label>Check Out</label><i class="icofont-checked" style="font-size: 25px;color: green;" id="checkout"></i></td>
+                    			<td><label>Check In</label><i class="icofont-checked" style="font-size: 25px;color: red;" id="checkin"></i></td>
+                    		</tr>
+                    		</table>
+                    	
+                    </div>
 
-					<div class="form-group mt-3">
-						<input type="password" name="" placeholder="Enter your password" class="form-control">
-					</div>
-					<div class="form-group mt-4">
-						<button class="btn btn-success" id="log">Sign In</button>
-					</div>
-				</div>
+
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</div>
 </section>
-
-
-
-
 
 
 	<section class="col-sm-12 mt-5">
@@ -64,22 +79,6 @@ $ii=[];
 
 
 
-<section>
-	<div class="col-sm-4 offset-sm-2 mt-4 modal hide fade" >
-					
-					<div class="col-sm-12 mt-3" style="color: white; font-size: 35px;"><strong>Login</strong>	</div>
-					<div class="form-group mt-3">
-						<input type="text" name="" placeholder="Enter your Mail" class="form-control">
-					</div>
-
-					<div class="form-group mt-3">
-						<input type="password" name="" placeholder="Enter your password" class="form-control">
-					</div>
-					<div class="form-group mt-4">
-						<button class="btn btn-success" id="log">Sign In</button>
-					</div>
-				</div>
-</section>
 
 
 
@@ -89,8 +88,8 @@ $ii=[];
 
 
 
-	<div style="overflow-y: auto; height: 700px; font-size: 12px;">
-		<table class="table table-sm table-striped t mt-3 "  id="result_user_gate_pass">
+	<div style="overflow-y: auto; height: 700px; font-size: 8px;">
+		<table class="table table-sm table-striped t mt-4 "  id="result_user_gate_pass">
 			<thead class="table-dark">
 				<th>SN</th>
 				<th>Fullname</th>
@@ -124,7 +123,9 @@ $ii=[];
  		<td>'.$viewallrep_gatepass['Approval_dept'].'</td>
  		<td>'.$viewallrep_gatepass['Approval_status'].'</td>
  		<td>'.$viewallrep_gatepass['date_raised'].'</td>
- 		<td><button class="btn btn-danger" id="butdecision"><i class="icofont-check-circled"></i></button></td>		
+ 		<td>
+ 			<input type="hidden" id="idtrack" value="'.$viewallrep_gatepass['staff_name'].'">
+ 		<i id="butdecision" class="icofont-check-circled" style="color:red; font-size:24px;"></i></td>		
  			
  		
  			</tr>
@@ -148,7 +149,17 @@ $ii=[];
 				$('#result_user_gate_pass').DataTable();
 
 				$('#butdecision').click(function(){
-					$('#myModal').modal();
+					alert($('#idtrack').val());
+					$('#myModal').modal('show');
+
+					$('#checkin').click(function(){
+						alert("Check In Transaction");
+
+					});
+					$('#checkout').click(function(){
+						alert("Check Out Transaction");
+
+					});
 
 				});
 			});

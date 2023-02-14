@@ -15,7 +15,29 @@
 		$(document).ready(function(){
 			//alert("Yes");
 			$('#log').click(function(){
-			window.location.href="documents/dashboard.php";
+			//window.location.href="documents/dashboard.php";
+				var sec_user=$('#sec_user').val();
+				var sec_pass=$('#sec_pass').val();
+			if(sec_user=="" || sec_pass==""){
+				alert("All fields are required");
+			}else{
+				//alert(sec_user+sec_pass);
+				$.ajax({
+					url:'Data/server.php',
+					method:'POST',
+					data:{
+						sec_log:1,
+						sec_user:sec_user,
+						sec_pass:sec_pass
+					},
+					dataType:'JSON',
+					success : function(evf){
+						alert(evf);
+
+					}
+				});
+			}
+
 			});
 		});
 	</script>
@@ -32,11 +54,11 @@
 					
 					<div class="col-sm-12 mt-3" style="color: white; font-size: 35px;"><strong>Login</strong>	</div>
 					<div class="form-group mt-3">
-						<input type="text" name="" placeholder="Enter your Mail" class="form-control">
+						<input type="text" name="" placeholder="Enter your Mail" class="form-control" id="sec_user">
 					</div>
 
 					<div class="form-group mt-3">
-						<input type="password" name="" placeholder="Enter your password" class="form-control">
+						<input type="password" name="" placeholder="Enter your password" class="form-control" id="sec_pass">
 					</div>
 					<div class="form-group mt-4">
 						<button class="btn btn-success" id="log">Sign In</button>

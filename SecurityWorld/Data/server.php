@@ -108,6 +108,29 @@ elseif(isset($_POST['saveUserName'])){
 
 		
 }
+elseif(isset($_POST['sec_log'])){
+	$sec_user=$_POST['sec_user'];
+	$sec_pass=$_POST['sec_pass'];
+
+
+$check_security=sqlsrv_query($db_connection,"SELECT * FROM IOU.dbo.staffdetails where email='$sec_user' and password='$sec_pass'");
+$check_security_ch=sqlsrv_fetch_array($check_security,SQLSRV_FETCH_ASSOC);
+$ch=sqlsrv_has_rows($check_security);
+		$fed=[];
+		if($ch>0){
+			$fed['email']=$check_security_ch['email'];
+			$fed['password']=$check_security_ch['password'];
+
+			//echo json_encode($fed);
+		}else{
+			//echo json_encode("Invalid Username or Password");
+		}
+
+		echo json_encode($fed);
+
+
+}
+
 
 
 

@@ -19,41 +19,47 @@
 			$('#itemgatepass').click(function(){
 				$('#viewall').load('itemgatepass.php');
 			});
+			$('#dashboardview_up').click(function(){
+
+				alert("Boss, I am here");
+
+			});
 				
 		});
 		
 	</script>
 </head>
-<body style="">
+<body style="background-color: #f0f0f0;">
 	<section class="container-fluid">
 		<section class="row">
-			<section class="col-2" style=" background-color:white ; height: 400px;">
+			<section class="col-2" style=" background-color:white ; height: 900px; background-color: black;">
 
 <ul class="list-group" style="">
 
 
 
 
-  <li class="list-group-item d-flex justify-content-between align-items-center" style="height: 80px;">
-    Dashoard
+  <li class="list-group-item d-flex justify-content-between align-items-center" style="height: 80px;background-color: black; color: white;">
+    <h1 id="dashboardview_up">Dashboard</h1>
       </li>
   </ul>
   <ul class="list-group mt-2">
-  <li class="list-group-item d-flex  btn btn" style="" id="usergatepass" >
-     <i class="icofont-investigator" style="color:purple; font-size: 25px; margin-right: 10px; "></i>Staff User GatePass
+  <li class="list-group-item d-flex  btn btn mt-2" style="background-color: black; color: white;" id="usergatepass" >
+    <i class="icofont-user-alt-4" style="color:red; font-size: 15px; margin-right: 10px; color: "></i><label style="font-size: 15px;">Staff User GatePass</label>
   </li>
-<li class="list-group-item d-flex btn btn" style="" id="itemgatepass">
-     <i class="icofont-investigator" style="color: ; font-size: 25px; margin-right: 10px;"></i>Item Gate Pass
-  </li>
-  <li class="list-group-item d-flex btn btn" style="">
+<li class="list-group-item d-flex btn btn mt-2" style="background-color: black; color: white;" id="itemgatepass">
+     <i class="icofont-box" style="color: ; font-size: 15px; margin-right: 10px; color: white;"></i><label style="font-size: 15px;">Item Gate Pass</label>
+  </li><!--
+  <li class="list-group-item d-flex btn btn mt-2" style="background-color: black; color: white;">
      <i class="icofont-investigator" style="color: ; font-size: 25px; margin-right: 10px;"></i>User Gate Pass
   </li>
-  <li class="list-group-item d-flex btn btn" style="">
+  <li class="list-group-item d-flex btn btn mt-2" style="background-color: black; color: white;">
      <i class="icofont-investigator" style="color: ; font-size: 25px; margin-right: 10px;"></i>User Gate Pass
   </li>
-  <li class="list-group-item d-flex btn btn" style="">
+  <li class="list-group-item d-flex btn btn mt-2" style="background-color: black; color: white;">
      <i class="icofont-investigator" style="color: ; font-size: 25px; margin-right: 10px;"></i>User Gate Pass
   </li>
+-->
 
 </ul>
 
@@ -61,6 +67,27 @@
 			</section>
 			<section class="col-10" style="">
 				<div class="row" id="viewall">
+
+					<div class="dashboardview">
+
+						<div class="row">
+							<figure class="figure">
+  <img src="..." class="figure-img img-fluid rounded" alt="...">
+  <figcaption class="figure-caption">A caption for the above image.</figcaption>
+</figure>
+<figure class="figure">
+  <img src="..." class="figure-img img-fluid rounded" alt="...">
+  <figcaption class="figure-caption">A caption for the above image.</figcaption>
+</figure>
+<figure class="figure">
+  <img src="..." class="figure-img img-fluid rounded" alt="...">
+  <figcaption class="figure-caption">A caption for the above image.</figcaption>
+</figure>
+
+
+						</div>
+						
+					</div>
 
 
 
