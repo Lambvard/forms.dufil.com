@@ -103,7 +103,7 @@ $ii=[];
 				<th>Date/Time</th>
 				<th>Security</th>
 			</thead>
-				
+			<tbody>		
 					<?php
 
 		$countboy=1;
@@ -124,8 +124,10 @@ $ii=[];
  		<td>'.$viewallrep_gatepass['Approval_status'].'</td>
  		<td>'.$viewallrep_gatepass['date_raised'].'</td>
  		<td>
- 			<input type="hidden" id="idtrack" value="'.$viewallrep_gatepass['staff_name'].'">
- 		<i id="butdecision" class="icofont-check-circled" style="color:red; font-size:24px;"></i></td>		
+ 			
+ 		
+
+ 		<i id="butdecision" class="icofont-check-circled" style="color:red; font-size:24px;"><input type="hidden" id="idtrack" value="'.$viewallrep_gatepass['transact_id'].'"></a></td>		
  			
  		
  			</tr>
@@ -136,7 +138,7 @@ $ii=[];
 }
 
 					?>
-				
+				</tbody>
 		</table>
 		</div>
 	</section>
@@ -148,20 +150,39 @@ $ii=[];
 		$(document).ready(function(){
 				$('#result_user_gate_pass').DataTable();
 
-				$('#butdecision').click(function(){
+
+
+
+
+					$('i[id^="id_r"').on('click',function(){
+						
+						alert(('idtrack').val());
+						
+				
+					});
+					//});
+
+
+
+			/*	$('#butdecision').click(function(){
 					alert($('#idtrack').val());
 					$('#myModal').modal('show');
 
-					$('#checkin').click(function(){
-						alert("Check In Transaction");
+					
+					
 
-					});
-					$('#checkout').click(function(){
-						alert("Check Out Transaction");
 
-					});
 
-				});
+					//$('#checkin').click(function(){
+					//	alert("Check In Transaction");
+
+					//});
+					//$('#checkout').click(function(){
+					//	alert("Check Out Transaction");
+
+					//});
+
+				});*/
 			});
 			
 			
