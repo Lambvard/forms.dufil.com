@@ -213,7 +213,7 @@
 <input type="text" name="Secret_Code" id="secret_code"  placeholder="Secret Code (Numbers Only)"  class="form-control mt-3" required max="5">
 </div>
 <div class="form-group">
-<input type="text" name="Secret_Code" id="Approval_id"  placeholder="Aprroval ID"  class="form-control mt-3" required>
+<input type="text" name="Secret_Code" id="Approval_id"  placeholder="Approval ID"  class="form-control mt-3" required>
 </div>
 <div class="form-group">
 <input type="text" name="Secret_Code" id="Approval_name"  placeholder="Approval Fullname"  class="form-control mt-3" disabled  required>

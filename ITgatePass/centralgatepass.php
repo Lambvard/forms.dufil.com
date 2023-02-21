@@ -37,6 +37,8 @@ if(isset($_SESSION['current_current'])){
   <ul class="list-group list-group-flush">
    <a href="../gpass" style="text-decoration: none;"> <li class="list-group-item" style="margin-bottom: 10px; background-color: purple; color: white;">PRODUCT GATE PASS</li></a>
     <a href="index.php" style="text-decoration: none;"> <li class="list-group-item" style="margin-bottom: 10px; background-color: indigo; color: white;">ITEM GATE PASS</li></a>
+    <a href="../userGpass" style="text-decoration: none;"> <li class="list-group-item" style="margin-bottom: 10px; background-color: #800000; color: white;">USER GATE PASS</li></a>
+    
     	<!--   -->
   </ul>
 </div>

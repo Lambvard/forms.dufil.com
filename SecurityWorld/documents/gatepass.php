@@ -47,18 +47,33 @@ $ii=[];
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title">Security Approval</h3>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" id="close">&times;</button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                    	
-                    
-                    		<table >
-                    		<tr>
-                    			<td><label>Check Out</label><i class="icofont-checked" style="font-size: 25px;color: green;" id="checkout"></i></td>
-                    			<td><label>Check In</label><i class="icofont-checked" style="font-size: 25px;color: red;" id="checkin"></i></td>
-                    		</tr>
+                    	<div class="row">
+
+                    		<table class="table table-striped">
+                    			<tr><td>Name: </td><td><? echo $countboy;?></td></tr>
+                    			<tr><td>Department:</td><td></td></tr>
+                    			<tr><td>Location:</td><td></td></tr>
+                    			<tr><td>Secrect Code:</td><td></td></tr>
+                    			<tr><td>Approver:</td><td></td></tr>
+                    			<tr><td>Approver Dept:</td><td></td></tr>
+                    			<tr><td>Status:</td><td></td></tr>
+                    			<tr><td>Check out Time:</td><td></td></tr>
+                    			<tr><td>Check in Time:</td><td></td></tr>
+
+                    			
+                    			
                     		</table>
+                    		
+                    	</div>
+                    
+                    		<div class="row">
+                    			<div class="col-6"><button class="btn btn-primary" id="checkouttime">Check Out</button></div>
+                    			<div class="col-6"><button class="btn btn-danger" id="checkintime">Check In</button></div>
+                    		</div>
                     	
                     </div>
 
@@ -73,7 +88,7 @@ $ii=[];
 
 
 	<section class="col-sm-12 mt-5">
-		<h1>User GatePass Status Report</h1>
+		<h1>Employee GatePass Status Report</h1>
 
 <!-- -->
 
@@ -123,6 +138,7 @@ $ii=[];
  		<td>'.$viewallrep_gatepass['Approval_dept'].'</td>
  		<td>'.$viewallrep_gatepass['Approval_status'].'</td>
  		<td>'.$viewallrep_gatepass['date_raised'].'</td>
+
  		<td>
  			
  		
@@ -150,40 +166,38 @@ $ii=[];
 		$(document).ready(function(){
 				$('#result_user_gate_pass').DataTable();
 
+				$('#butdecision').on('click',function(){
+				//	alert("Yes");
+				//	var ui=$(this).data('id');
+				//	alert(ui);
+				alert($('#idtrack').val());
+				$('#myModal').modal('show');
+				});
 
 
+					var trk=$(this).attr('#idtrack');
+					//alert(trk);
+					$.ajax({
+						url:'../Data/server2.php',
+						method:'POST',
+						data:{fetchrec:1,trk:trk},
+						dataType:'JSON',
+						success:function(datafetch){
+							//alert(datafetch.staff_name);
 
-
-					$('i[id^="id_r"').on('click',function(){
-						
-						alert(('idtrack').val());
-						
-				
+						}
 					});
-					//});
-
-
-
-			/*	$('#butdecision').click(function(){
-					alert($('#idtrack').val());
-					$('#myModal').modal('show');
 
 					
-					
+					$('#checkouttime').click(function(){
+						alert("You are authorizing the checking out of staff from the company premises!");
+					});
+					$('#checkintime').click(function(){
+						alert("You are authorizing the checking in of staff into the company premises!");
+					});
 
-
-
-					//$('#checkin').click(function(){
-					//	alert("Check In Transaction");
-
-					//});
-					//$('#checkout').click(function(){
-					//	alert("Check Out Transaction");
-
-					//});
-
-				});*/
-			});
+				});
+		
 			
 			
 		

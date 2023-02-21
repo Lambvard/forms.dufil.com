@@ -23,7 +23,7 @@
 			}else{
 				//alert(sec_user+sec_pass);
 				$.ajax({
-					url:'Data/server.php',
+					url:'Data/server2.php',
 					method:'POST',
 					data:{
 						sec_log:1,
@@ -32,8 +32,12 @@
 					},
 					dataType:'JSON',
 					success : function(evf){
-						alert(evf);
-
+						if(evf=="No"){
+						alert("You have entered an invalid username or password");
+						}else{
+							//alert(evf.mail);
+							window.location.href="documents/dashboard.php";
+						}
 					}
 				});
 			}
