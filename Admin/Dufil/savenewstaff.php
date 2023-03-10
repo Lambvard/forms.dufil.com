@@ -64,10 +64,11 @@
 						var staffidnewsave=$('#staffidnewsave').val();
 						var userrole=$('#userrole').val();
 						var userstatus=$('#userstatus').val();
+						var mailsave=$('#mailsave').val();
 
 
 
-					if(firstnamesave=="" || surnamesave==""  || deptsave=="" || location==""){
+					if(firstnamesave=="" || surnamesave==""  || deptsave=="" || location=="" || mailsave==""){
 							alert("All fields are required before I can save");
 					}
 					else{
@@ -75,7 +76,7 @@
 						$.ajax({
 						url:'../db/server.php',
 						method:'POST',
-						data:{savenewstaff:1,staffidnewsave:staffidnewsave,firstnamesave:firstnamesave,surnamesave:surnamesave,othernamesave:othernamesave,deptsave:deptsave,location:location,userrole:userrole,userstatus:userstatus},
+						data:{savenewstaff:1,staffidnewsave:staffidnewsave,firstnamesave:firstnamesave,surnamesave:surnamesave,othernamesave:othernamesave,deptsave:deptsave,location:location,userrole:userrole,userstatus:userstatus,mailsave:mailsave},
 						dataType:'JSON',
 						success: function(saveuser){
 								
@@ -215,6 +216,16 @@
   				<option>De-Activate</option>
   			</select>
 		</div>
+
+		<div class="input-group mb-3">
+  			<div class="input-group-prepend">
+   				 <span class="input-group-text"><i class="icofont-email" style="font-size: 25px;"></i></span>
+ 			 </div>
+  			<input type="email" class="form-control" placeholder="Staff mail"  id="mailsave" aria-label="" aria-describedby="basic-addon1">
+		</div>
+
+
+
 		<div class="input-group mb-3">
   			<button class="btn btn-danger float	s-right" id="upda"> <span class="icofont-save" style="font-size: 20px;"></span> Save Staff Record</button>
 		</div>

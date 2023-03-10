@@ -43,6 +43,64 @@
 											$('#IdApp').html(ev.AppID);
 											$('#StatusApp').html(ev.AppStatus);
 
+
+											var dep=ev.depts;
+											var loc=ev.loc;
+											var idf=$('#staff_idinfo').val();
+												//alert(loc);
+
+										$.ajax({
+								//alert("Approval_id");
+
+												url:'DataStore/server.php',
+												method:'POST',
+												data:{app_depT:1,dep:dep,idf:idf,loc:loc
+												},
+												dataType:'JSON',
+												success: function(ev_app){
+
+				$.each(ev_app, function(i, value) {
+            	$('#Approval_name').append($('<option>').text(value.fullname_app).attr('value', value.fullname_app));
+
+            	
+            	});
+							
+				$('#Approval_name').change(function(){
+				var dep_s=$('#Approval_name').val();
+				var stfloc=$('#staff_location').val();
+				var stfdept=$('#staff_department').val();
+				//alert(stfloc);
+            	//alert(dep_s);
+            	$.ajax({
+            		url:'DataStore/server.php',
+					method:'POST',
+					data:{app_s:1,dep_s:dep_s,stfloc:stfloc,stfdept:stfdept
+					},
+					dataType:'JSON',
+					success: function(ev_s){
+						//alert(ev_s);
+						//alert(ev_s.StaffID_);
+						//alert(ev_s.Department_);
+						//alert(ev_s.mail_);
+						$('#Approval_id').val(ev_s.StaffID_);
+						$('#Approval_dept').val(ev_s.Department_);
+						$('#Approval_email').val(ev_s.mail_);
+					}
+            	});
+				});
+
+
+											
+									}
+
+
+						});
+
+
+
+
+
+
 										}
 
 											
@@ -187,7 +245,7 @@
 
 <section>
 	<div class="container col-sm-6 mt-3">
-		<span style="font-size: 40px;">Staff Gate Pass</span>
+		<span style="font-size: 40px;">Employee Gate Pass</span>
 	</div>
 <div class="col-sm-12">
 <div class="col-sm-4 offset-sm-3 col-md-6 col-lg-6">
@@ -212,11 +270,17 @@
 <div class="form-group">
 <input type="text" name="Secret_Code" id="secret_code"  placeholder="Secret Code (Numbers Only)"  class="form-control mt-3" required max="5">
 </div>
+
 <div class="form-group">
-<input type="text" name="Secret_Code" id="Approval_id"  placeholder="Approval ID"  class="form-control mt-3" required>
+<!--<input type="text" name="Secret_Code" id="Approval_name"  placeholder="Approval Fullname"  class="form-control mt-3" disabled  required>-->
+
+<select class="form-control mt-3" id="Approval_name">
+	<option> </option>
+	
+</select>
 </div>
 <div class="form-group">
-<input type="text" name="Secret_Code" id="Approval_name"  placeholder="Approval Fullname"  class="form-control mt-3" disabled  required>
+<input type="text" name="Secret_Code" id="Approval_id"  placeholder="Approval ID"  class="form-control mt-3" disabled required>
 </div>
 <div class="form-group">
 <input type="text" name="Secret_Code" id="Approval_dept"  placeholder="Approval Department"  class="form-control mt-3"  disabled required>
@@ -226,7 +290,8 @@
 </div>
 
 <div>
-<button class="btn btn-danger mt-3" id="submit">Submit</button>
+<button class="btn btn-primary mt-3" id="submit">Submit</button>
+<a href="../../"><button class="btn btn-danger mt-3 float-right" id="exit">Exit</button></a>
 </div>
 </div>
 </div>

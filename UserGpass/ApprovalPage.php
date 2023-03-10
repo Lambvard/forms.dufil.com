@@ -109,6 +109,7 @@ echo '
 			//alert("I am Approving the request");
 			var approve_id=$('#approve_id').val();
 			var trac_id=$('#app_id_use').val();
+			//alert(trac_id);
 			$.ajax({
 				url:'datastore/server.php',
 				method:'POST',

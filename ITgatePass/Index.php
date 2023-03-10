@@ -52,6 +52,7 @@ if(isset($_SESSION['current_current'])){
 					$('#vname').attr('disabled',true);
 					$('#selectionpurpose_value').attr('disabled',true);
 					$('#buttongroup').css('display','none');
+					$('#exit').css('display','none');
 					$('#bider').css('display','none');
 			alert("Please provide your Staff ID for me to proceed");
 				}else{
@@ -79,6 +80,7 @@ if(isset($_SESSION['current_current'])){
 								$('#vname').attr('disabled',false);
 								$('#selectionpurpose_value').attr('disabled',false);
 								$('#buttongroup').css('display','block');
+								$('#exit').css('display','block');
 								//$('#buttongroups').css('display','block');
 								$('#buttongroupcenter').css('display','block');
 								//$('#bider').css('display','block');
@@ -509,6 +511,7 @@ if(isset($_SESSION['current_current'])){
 
 					<div class="form-group" >
 					<button class="btn btn float-left" id="buttongroup" style="background-color:#770db5; color: white; display: none; margin-top: 10px; font-size: 18px;"><i class="icofont-ui-add" style="font-size: 18px;"></i> Proceed </button>
+					<a href="../../"><button class="btn btn-danger float-right" id="exit" style="background-color:red; color: white; display: none; margin-top: 10px; font-size: 18px;"><i class="icofont-exit" style="font-size: 18px;"></i> Exit </button></a>
 
 					<!--<button class="btn btn float" id="buttongroupcenter" style="background-color:#770db5; color: white; display: none; margin-top: 10px; font-size: 18px;"><i class="icofont-minus-circle" style="font-size: 18px;"></i> </button>
 					-->

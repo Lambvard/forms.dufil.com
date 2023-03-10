@@ -152,7 +152,7 @@ catch (Exception $e) {
 }elseif (isset($_POST['reject_staff'])) {
 			$reject_staff=$_POST['reject_id'];
 			$trac_id=$_POST['trac_id'];
-			$sta="Reject";
+			$sta="Rejected";
 			$now_date=date("Y-m-d h:m:i");
 
 
@@ -166,7 +166,7 @@ catch (Exception $e) {
 }elseif (isset($_POST['approve_staff'])) {
 	$approve_staff=$_POST['approve_id'];
 	$trac_id=$_POST['trac_id'];
-	$sta="Approve";
+	$sta="Approved";
 	$now_date=date("Y-m-d h:m:i");
 
 	$update_approval=sqlsrv_query($db_connection,"UPDATE gpass.dbo.gpass_trans_log SET Approval_status='$sta', Approval_status_change_date='$now_date' where transact_id='$trac_id'");
@@ -174,6 +174,63 @@ catch (Exception $e) {
 
 	# code...
 		echo json_encode("You have successfully Approved the staff request");
+}elseif(isset($_POST['app_depT'])){
+	$dp=$_POST['dep'];
+	$idf=$_POST['idf'];
+	$loc=$_POST['loc'];
+	//$dp="ICT";
+
+	$st="Activate";
+	$id_check_appDept=sqlsrv_query($db_connection,"SELECT * FROM IOU.dbo.staffdetails where Dept='$dp' and stafflocation='$loc' and cur_status='$st' and Staffid not in ('$idf') and staff_mail is not null");
+	$id_check_db_appDept=sqlsrv_has_rows($id_check_appDept);
+	
+	//$fg=sqlsrv_num_rows($id_check_appDept);
+	//and Staffid not in ('$idf') and staff_mail is not null and  
+
+	$dept_track=[];
+
+	if($id_check_db_appDept>0){
+		$i=0;
+		while ($id_check_db_user_appDept=sqlsrv_fetch_array($id_check_appDept,SQLSRV_FETCH_ASSOC)){
+			$dept_track[$i]['fullname_app']=trim($id_check_db_user_appDept['surname'])." ".trim($id_check_db_user_appDept['firstname'])." ".trim($id_check_db_user_appDept['othernames']);
+			$dept_track['StaffID']=$id_check_db_user_appDept['Staffid'];
+			//	$id_check_db_a['email_app']=$id_check_db_user_app['staff_mail'];
+			# code...
+
+			 $i++; 
+		}
+	
+		//$id_check_db_['loc']=$id_check_db_user['stafflocation'];
+		
+	}else{
+		echo "notconnecetd";
+	}
+
+echo json_encode($dept_track);
+//var_dump($dept_track);
+//echo json_encode($dept_track);
+}elseif (isset($_POST['app_s'])){
+	$dp_s=$_POST['dep_s'];
+	$stfdept=$_POST['stfdept'];
+	$stfloc=$_POST['stfloc'];
+	$dp_ss=explode(" ", $dp_s);
+	$surname=trim($dp_ss[0]);
+	$firstname=trim($dp_ss[1]);
+	$othernames=trim($dp_ss[2]);
+	//$rt=;
+	$st="Activate";
+	// where surname='$surname' and firstname='$firstname' and othernames='$othernames'  and Dept='$dp_s' 
+	//and surname='$surname' and firstname='$firstname' and othernames='$othernames'  and othernames='$othernames'
+	$id_=sqlsrv_query($db_connection,"SELECT * FROM IOU.dbo.staffdetails where stafflocation='$stfloc' and Dept='$stfdept' and cur_status='$st' and surname='$surname' and firstname='$firstname' and othernames='$othernames'");
+
+	$user_d=[];
+	$id_c=sqlsrv_fetch_array($id_,SQLSRV_FETCH_ASSOC);
+	$user_d['StaffID_']=$id_c['Staffid'];
+	$user_d['Department_']=$id_c['Dept'];
+	$user_d['mail_']=$id_c['staff_mail'];
+	//$user_d['']=$id_c[''];
+echo json_encode($user_d);
+
 }
 
 

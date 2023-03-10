@@ -144,9 +144,9 @@
         <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
           <a href="../IOU"><div class="jumbotron" align="center" style="padding:0px;padding-top: 20px;padding-right: 0px;background-color: #fcc635;"><i class="fas fa-book-reader" style="font-size: 80px;color: "></i><br><label style="font-size: 30px;color: black;">IOU</label></div></a>
 
-        </div>
+        </div><!-- 001a4d -->
          <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
-           <a href="../Sensoryuser"><div class="jumbotron" align="center" style="padding:0px;padding-top: 20px;padding-right: 0px;background-color: #001a4d;"><i class="fas fa-utensils" style="font-size: 80px;color: white;"></i><br><label style="font-size: 30px;color: white;">Corp Sensory</label></div></a>
+           <a href="../securityworld"><div class="jumbotron" align="center" style="padding:0px;padding-top: 20px;padding-right: 0px;background-color: black;"><i class="fa fa-user-secret" aria-hidden="true" style="font-size: 80px;color:red;"></i><br><label style="font-size: 30px;color: white;">Security</label></div></a>
           </div>
           <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
            <a href="../leave"><div class="jumbotron" align="center" style="padding:0px;padding-top: 20px;padding-right: 0px;background-color: white; border:1px solid black;"><i class="fab fa-wpforms" style="font-size: 80px;"></i><br><label style="font-size: 30px;">Leave Form</label></div></a>
@@ -195,6 +195,36 @@
           </div>
 
       </div>
+
+
+<!--
+
+
+        <div class="row">
+        <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
+          <a href="../petty"><div class="jumbotron" align="center" style="padding:0px;padding-top: 20px;padding-right: 0px;background-color: #fcc635;"><i class="fas fa-money-bill-wave" style="font-size: 80px;color: "></i><br><label style="font-size: 30px;color: black;">Petty Voucher</label></div></a>
+        </div>
+         <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
+          <a href="../ious"><div class="jumbotron" align="center" style="padding:0px;padding-top: 20px;padding-right: 0px;background-color: #001a4d;"><i class="fa fa-database" aria-hidden="true" style="font-size: 80px;color: white;"></i><br><label style="font-size: 30px;color: white;">Liquidation(EXP)</label></div></a>
+          </div>
+
+          <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
+           <a href="../Itemrequest"><div class="jumbotron" align="center" style="padding:0px;padding-top: 20px;padding-right: 0px;background-color: white; border:1px solid black;"><i class="fas fa-solid fa-align-justify" style="font-size: 80px;"></i><br><label style="font-size: 30px;">Item Request Form</label></div></a>
+           </div>
+
+          <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
+          <a href="Itgatepass/centralgatepass.php"><div class="jumbotron" align="center" style="padding:0px;padding-top: 20px;padding-right: 0px; background-color: #4B026D;"><i class="fa fa-briefcase" style="font-size: 80px;color: white;"></i><br><label style="font-size: 30px;color:white;">GATE PASS</label></div></a>
+          </div>
+
+      </div>
+
+
+
+
+-->
+
+
+
 
       <!-- -->
 

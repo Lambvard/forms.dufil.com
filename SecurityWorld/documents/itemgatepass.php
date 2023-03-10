@@ -1,6 +1,9 @@
 <?php
 include('../data/db.php');
-
+session_start();
+if(!isset($_SESSION['user_id'])){
+	header("Location: ../index.php?id=invalidlogin");
+}
 //echo "I will be printing here for all transactions";
 
 
@@ -35,8 +38,20 @@ $pull_record_itemgatepass=sqlsrv_query($db_connection," SELECT * FROM [liquidati
 
 	<section class="col-sm-12 mt-5">
 		<h1>ITEM GatePass Status Report</h1>
-	<div style="overflow-y: auto; height: 700px;">
-		<table class="table table-sm table-striped mt-3" id="result_item_gate_pass">
+	<div style="overflow-y: auto; height: 700px; ">
+
+
+		<?php
+
+			if(isset($_GET['#trk'])){
+						echo "Yes I am here";
+
+					}else{
+						
+						echo '
+
+
+							<table class="table table-sm table-striped mt-3" id="result_item_gate_pass">
 			<thead class="table-dark">
 				<th>SN</th>
 				<th>StaffID</th>
@@ -47,10 +62,10 @@ $pull_record_itemgatepass=sqlsrv_query($db_connection," SELECT * FROM [liquidati
 				<th>Type</th>
 				<th>Date/Time</th>
 				<th>Security</th>
-			</thead>
-				<?php 
+			</thead>';
 
-	$countboy=1;
+
+			$countboy=1;
  	while($viewallrep_itemgatepass=sqlsrv_fetch_array($pull_record_itemgatepass,SQLSRV_FETCH_ASSOC)){
 
  			echo '
@@ -63,7 +78,7 @@ $pull_record_itemgatepass=sqlsrv_query($db_connection," SELECT * FROM [liquidati
 				<td>'.$viewallrep_itemgatepass['vcompany'].'</td>
 				<td>'.$viewallrep_itemgatepass['vexit'].'</td>
 				<td>'.$viewallrep_itemgatepass['date_now'].'</td>
-				<td><i class="icofont-check-circled" style="color:red; font-size:18px;"></i></td>
+				<td><a href="dashboard.php?trk='.$viewallrep_itemgatepass['trans_id'].'" style=" text-decoration: none;"><i class="icofont-check-circled" style="color:red; font-size:18px;"></i></a></td>
 
 
 				</tr>
@@ -72,12 +87,30 @@ $pull_record_itemgatepass=sqlsrv_query($db_connection," SELECT * FROM [liquidati
  			$countboy=$countboy+1;
 		}
 
-				?>
+
+
+					}
+
+		?>
+
+
 				
 		
 		</table>
 		</div>
+
+
+
+
+
+
+
 	</section>
+
+
+
+
+
 
 
 

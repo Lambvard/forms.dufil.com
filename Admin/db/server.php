@@ -17,6 +17,7 @@ if(isset($_POST['useridsearch'])){
 			$json['dept']=$check_staff_up['Dept'];
 			$json['staffid']=$staffidcheck;
 			$json['location']=$check_staff_up['stafflocation'];
+			$json['updatemail']=$check_staff_up['staff_mail'];
 	
 	}else{
 
@@ -45,6 +46,7 @@ elseif (isset($_POST['savenewstaff'])) {
 			$location=$_POST['location'];
 			$userstatus= $_POST['userstatus'];
 			$userrole=$_POST['userrole'];
+			$mailsave=$_POST['mailsave'];
 			//$temp="Admin";
 
 
@@ -57,7 +59,7 @@ elseif (isset($_POST['savenewstaff'])) {
 			}else{
 				
 			//$real_data=array($staffidnewsave,$firstnamesave,$surnamesave,$othernamesave,$deptsave,$location);	
-  		$data_iou="INSERT into IOU.dbo.staffdetails (Staffid,surname,firstname,othernames,Dept,stafflocation,role,cur_status) values(?,?,?,?,?,?,?,?)";
+  		$data_iou="INSERT into IOU.dbo.staffdetails (Staffid,surname,firstname,othernames,Dept,stafflocation,role,cur_status,staff_mail) values(?,?,?,?,?,?,?,?,?)";
   		$data_leave="INSERT into leave.dbo.staffdetailsleave(Staffid,surname,firstname,othernames,Dept,stafflocation,role,cur_status) values(?,?,?,?,?,?,?,?)";
   		$data_liqu="INSERT into liquidation.dbo.staffdetails(Staffid,surname,firstname,othernames,Dept,stafflocation,role,cur_status) values(?,?,?,?,?,?,?,?)";
   		$data_loan="INSERT into loan.dbo.staffdetails(Staffid,surname,firstname,othernames,Dept,stafflocation,role,cur_status) values(?,?,?,?,?,?,?,?)";
@@ -66,7 +68,7 @@ elseif (isset($_POST['savenewstaff'])) {
   		$data_workorder="INSERT into workorder.dbo.staffdetails(Staffid,surname,firstname,othernames,Dept,stafflocation,role,cur_status) values(?,?,?,?,?,?,?,?)";
 
 
-  		$pre_iou=sqlsrv_prepare($db_connection,$data_iou,array($staffidnewsave,$surnamesave,$firstnamesave,$othernamesave,$deptsave,$location,$userrole,$userstatus));
+  		$pre_iou=sqlsrv_prepare($db_connection,$data_iou,array($staffidnewsave,$surnamesave,$firstnamesave,$othernamesave,$deptsave,$location,$userrole,$userstatus,$mailsave));
   		$pre_leave=sqlsrv_prepare($db_connectionleave,$data_leave,array($staffidnewsave,$surnamesave,$firstnamesave,$othernamesave,$deptsave,$location,$userrole,$userstatus));
   		$pre_liqu=sqlsrv_prepare($db_connectionliq,$data_liqu,array($staffidnewsave,$surnamesave,$firstnamesave,$othernamesave,$deptsave,$location,$userrole,$userstatus));
   		$pre_loan=sqlsrv_prepare($db_connectionloan,$data_loan,array($staffidnewsave,$surnamesave,$firstnamesave,$othernamesave,$deptsave,$location,$userrole,$userstatus));
@@ -97,8 +99,9 @@ elseif (isset($_POST['updateuserprofile'])) {
 		$dept=$_POST['dept'];
 		$location=$_POST['location'];
 		$changestatus=$_POST['statuschange'];
+		$updatemail=$_POST['updatemail'];
 		
-			$check_staff_new_id=sqlsrv_query($db_connection,"UPDATE IOU.dbo.staffdetails set Staffid='$staffidnewupdate', firstname='$firstname', surname='$surname', othernames='$othername', Dept='$dept', stafflocation='$location',cur_status='$changestatus' where Staffid='$staffidold' ");
+			$check_staff_new_id=sqlsrv_query($db_connection,"UPDATE IOU.dbo.staffdetails set Staffid='$staffidnewupdate', firstname='$firstname', surname='$surname', othernames='$othername', Dept='$dept', stafflocation='$location',cur_status='$changestatus',staff_mail='$updatemail' where Staffid='$staffidold' ");
 			$check_staff_new_id=sqlsrv_query($db_connectionleave,"UPDATE leave.dbo.staffdetailsleave set Staffid='$staffidnewupdate', firstname='$firstname', surname='$surname', othernames='$othername', Dept='$dept', stafflocation='$location',cur_status='$changestatus' where Staffid='$staffidold'");
 			$check_staff_new_id=sqlsrv_query($db_connectionliq,"UPDATE liquidation.dbo.staffdetails set Staffid='$staffidnewupdate', firstname='$firstname', surname='$surname', othernames='$othername', Dept='$dept', stafflocation='$location',cur_status='$changestatus' where Staffid='$staffidold'");
 			$check_staff_new_id=sqlsrv_query($db_connectionloan,"UPDATE loan.dbo.staffdetails set Staffid='$staffidnewupdate', firstname='$firstname', surname='$surname', othernames='$othername', Dept='$dept', stafflocation='$location',cur_status='$changestatus' where Staffid='$staffidold'");

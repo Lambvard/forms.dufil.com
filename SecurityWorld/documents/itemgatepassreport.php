@@ -1,6 +1,9 @@
 <?php
 include('../data/db.php');
-
+session_start();
+if(!isset($_SESSION['user_id'])){
+	header("Location: ../index.php?id=invalidlogin");
+}
 //echo "I will be printing here for all transactions";
 
 

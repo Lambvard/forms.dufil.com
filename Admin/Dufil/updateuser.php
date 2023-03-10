@@ -37,6 +37,7 @@
 							$('#othername').val(evuser.othernames);
 							$('#dept').val(evuser.dept);
 							$('#location').val(evuser.location);
+							$('#updatemail').val(evuser.updatemail);
 							
 
 
@@ -62,9 +63,10 @@
 					var dept=$('#dept').val();
 					var location=$('#location').val();
 					var statuschange=$('#stu').val();
+					var updatemail=$('#updatemail').val();
 
 
-					if(userinput== "" || surname == ""|| firstname == ""|| othername== ""||dept == ""|| location == ""|| statuschange == ""){
+					if(userinput== "" || surname == ""|| firstname == ""|| othername== ""||dept == ""|| location == ""|| statuschange == "" || updatemail==""){
 						alert("All fields are required for this operation");
 
 					}
@@ -83,7 +85,7 @@
 							$.ajax({
 								url:'../db/server.php',
 								method:'POST',
-								data:{updateuserprofile:1,staffidnewupdate:staffidnewupdate,userinput:userinput,surname:surname,firstname:firstname,othername:othername,dept:dept,location:location,statuschange:statuschange},
+								data:{updateuserprofile:1,staffidnewupdate:staffidnewupdate,userinput:userinput,surname:surname,firstname:firstname,othername:othername,dept:dept,location:location,statuschange:statuschange,updatemail:updatemail},
 								dataType:'JSON',
 
 								success : function(updateuser){
@@ -214,7 +216,12 @@
   			</select>
 		</div>
 
-
+			<div class="input-group mb-3">
+  			<div class="input-group-prepend">
+   				 <span class="input-group-text"><i class="icofont-email" style="font-size: 25px;"></i></span>
+ 			 </div>
+  			<input type="email" class="form-control" placeholder="Staff email"  id="updatemail" aria-label="" aria-describedby="basic-addon1">
+		</div>
 
 
 

@@ -35,7 +35,8 @@
 						if(evf=="No"){
 						alert("You have entered an invalid username or password");
 						}else{
-							//alert(evf.mail);
+							alert(evf);
+							
 							window.location.href="documents/dashboard.php";
 						}
 					}
@@ -55,7 +56,15 @@
 		<div class="row"  style="margin-top: px;">	
 						
 				<div class="col-sm-4 offset-sm-2 mt-4">
-					
+					<?php 
+
+								if($_GET['id']){
+									if($_GET['id']=="invalidlogin"){
+										echo '<div style="color:white;">Invalid Username or Password</div>';
+									}
+								}
+
+					 ?>
 					<div class="col-sm-12 mt-3" style="color: white; font-size: 35px;"><strong>Login</strong>	</div>
 					<div class="form-group mt-3">
 						<input type="text" name="" placeholder="Enter your Mail" class="form-control" id="sec_user">

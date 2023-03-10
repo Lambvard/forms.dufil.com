@@ -1,6 +1,9 @@
 <?php
 include('../data/db.php');
-
+session_start();
+if(!isset($_SESSION['user_id'])){
+	header("Location: ../index.php?id=invalidlogin");
+}
 //echo "I will be printing here for all transactions";
 
 //staff_name,staff_department,staff_location,secret_code,Approval_name,Approval_dept,Approval_mail,Approval_status,date_raised WHERE date_raised_2='$nowdate'
